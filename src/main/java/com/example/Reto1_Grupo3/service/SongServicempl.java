@@ -2,7 +2,7 @@ package com.example.Reto1_Grupo3.service;
 
 import java.util.List;
 
-import com.example.Reto1_Grupo3.model.song.Song;
+import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.repository.SongRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +16,7 @@ public class SongServicempl implements SongService{
 	SongRepository songRepository;
 	
 	@Override
-	public List<Song> findAll() {
+	public List<SongDAO> findAll() {
 		
 		return songRepository.findAll();
 	}
