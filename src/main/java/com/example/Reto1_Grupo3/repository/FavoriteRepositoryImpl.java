@@ -13,6 +13,7 @@ import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
 import com.example.Reto1_Grupo3.service.FavoriteService;
 
 
+
 @Repository
 public class FavoriteRepositoryImpl implements FavoriteRepository{
 
@@ -42,6 +43,22 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
 		// TODO Auto-generated method stub
 		return jdbcTemplate.update("Delete from favorite where id = ?", id);
 		
+	}
+
+	@Override
+	public boolean findFavorite(FavoritePostRequest favorite) {
+		try {
+			FavoriteDAO favoriteDAO = jdbcTemplate.queryForObject("Select * from favorite where id_song = ? and id_user = ?", BeanPropertyRowMapper.newInstance(FavoriteDAO.class), favorite.getId_song(), favorite.getId_user());			
+			if(favorite.getId_song() == favoriteDAO.getId_song() && favorite.getId_user() == favoriteDAO.getId_user()) {
+				return true;
+			}else {
+				System.out.println("aaa");
+				return false;
+			}
+		} catch (EmptyResultDataAccessException e) {
+			System.out.println("aaa2131");
+			return false;
+		}
 	}
 
 }

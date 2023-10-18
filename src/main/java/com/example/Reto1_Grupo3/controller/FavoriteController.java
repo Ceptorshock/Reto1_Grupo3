@@ -27,22 +27,11 @@ public class FavoriteController {
 	FavoriteService favoriteService;
 	
 	@GetMapping("/fav/{id}")
-	public List<FavoriteGetResponse> getAllFavorites(@PathVariable("id") Integer id ){
-		
-		List<FavoriteDTO> listFavoriteDTO = favoriteService.findAll(id);
-		List<FavoriteGetResponse> listFavoriteGetResponse = new ArrayList<FavoriteGetResponse>();
-		
-		for (FavoriteDTO favoriteDTO : listFavoriteDTO) {
-			FavoriteGetResponse favoriteGetResponse = new FavoriteGetResponse();
-			favoriteGetResponse.setId(favoriteDTO.getId());
-			favoriteGetResponse.setId_song(favoriteDTO.getId_song());
-			favoriteGetResponse.setId_user(favoriteDTO.getId_user());
-			listFavoriteGetResponse.add(favoriteGetResponse);
-		}
-		
-		return listFavoriteGetResponse;
+	public List<FavoriteGetResponse> getAllFavorites(@PathVariable("id") Integer id ){		
+		return fromDTOToGetResponse(favoriteService.findAll(id));
 	}
 	
+
 	@DeleteMapping("/fav/{id}")
 	public Integer deleteFavorite(@PathVariable("id") Integer id) {
 		return favoriteService.deleteFavorite(id);
@@ -53,5 +42,18 @@ public class FavoriteController {
 		return favoriteService.addFavorite(favorite);
 	}
 	
+	private List<FavoriteGetResponse> fromDTOToGetResponse(List<FavoriteDTO> listFavoriteDTO) {	
+		List<FavoriteGetResponse> listFavoriteGetResponse = new ArrayList<FavoriteGetResponse>();
+		
+		for (FavoriteDTO favoriteDTO : listFavoriteDTO) {
+			listFavoriteGetResponse.add(
+					new FavoriteGetResponse(
+							favoriteDTO.getId(), 
+							favoriteDTO.getId_song(), 
+							favoriteDTO.getId_user()));
+		}
+		
+		return listFavoriteGetResponse;
+	}
 
 }

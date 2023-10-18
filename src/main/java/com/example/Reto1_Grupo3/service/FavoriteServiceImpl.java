@@ -19,28 +19,35 @@ public class FavoriteServiceImpl implements FavoriteService{
 	
 	@Override
 	public List<FavoriteDTO> findAll(Integer id) {
-		List<FavoriteDAO> listFavoriteDAO = favoriteRepository.findAll(id);
-		List<FavoriteDTO> listFavoriteDTO = new ArrayList<FavoriteDTO>();
-		
-		for (FavoriteDAO favoriteDAO : listFavoriteDAO) {
-			FavoriteDTO favoriteDTO = new FavoriteDTO();
-			favoriteDTO.setId(favoriteDAO.getId());
-			favoriteDTO.setId_song(favoriteDAO.getId_song());
-			favoriteDTO.setId_user(favoriteDAO.getId_user());
-			listFavoriteDTO.add(favoriteDTO);
-		}
-		return listFavoriteDTO;
+		return fromDAOToDTO(favoriteRepository.findAll(id));
 	}
 
 	@Override
 	public Integer deleteFavorite(Integer id) {
 		return favoriteRepository.deleteFavorite(id); 
-		
 	}
 
 	@Override
 	public Integer addFavorite(FavoritePostRequest favorite) {
-		return favoriteRepository.addFavorite(favorite);
+		if(!favoriteRepository.findFavorite(favorite)) {
+			return favoriteRepository.addFavorite(favorite);			
+		}else {
+			return 0;
+		}
+	}
+	
+	private List<FavoriteDTO> fromDAOToDTO(List<FavoriteDAO> listFavoriteDAO) {
+			
+		List<FavoriteDTO> listFavoriteDTO = new ArrayList<FavoriteDTO>();
+		
+		for (FavoriteDAO favoriteDAO : listFavoriteDAO) {
+			listFavoriteDTO.add(
+					new FavoriteDTO(
+							favoriteDAO.getId(),
+							favoriteDAO.getId_song(),
+							favoriteDAO.getId_user()));
+		}
+		return listFavoriteDTO;
 	}
 
 }
