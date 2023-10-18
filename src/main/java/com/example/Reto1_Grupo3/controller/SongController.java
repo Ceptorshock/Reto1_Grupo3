@@ -1,4 +1,4 @@
-package com.example.Reto1_Grupo3.model.song;
+package com.example.Reto1_Grupo3.controller;
 
 import java.util.List;
 
