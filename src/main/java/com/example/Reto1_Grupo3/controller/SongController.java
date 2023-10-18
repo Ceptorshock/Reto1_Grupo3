@@ -64,15 +64,27 @@ public class SongController {
 				
 	}
 	
-	//@PostMapping("/song")
-	/*public int createSong(@RequestBody SongPostRequest songPostRequest) {
+	@PostMapping("/song")
+	public int createSong(@RequestBody SongPostRequest songPostRequest) {
 		
-		int SongDTO = songService.createSong(songPostRequest);
-		List<SongDTO> listSongDTO = new ArrayList<SongDTO>();
-		
-		
+		songService.createSong(SongDTOconvertRequestToDTO(songPostRequest));
+
 		
 		return 0;
-	}*/
-	
+	}
+	private SongDTO SongDTOconvertRequestToDTO(SongPostRequest songPostRequest) {
+		SongDTO songDTO = new SongDTO(
+				songPostRequest.getId(),
+				songPostRequest.getUrl(),
+				songPostRequest.getTitle(),
+				songPostRequest.getAuthor());
+		return songDTO;
+	}
+	private SongGetResponse convertDTOtoResponse(SongDTO songDTO) {
+		return new SongGetResponse(
+				songDTO.getId(),
+				songDTO.getUrl(),
+				songDTO.getTitle(),
+				songDTO.getAuthor());
+	}
 }

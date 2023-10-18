@@ -13,9 +13,9 @@ public interface SongRepository {
 	
 	List<SongDAO> findSongById(int id);
 	
-	int createSong (SongDTO songDTO);
+	int createSong (SongDAO songDAO);
 	
-	int updateSong(SongDTO songDTO);
+	int updateSong(SongDAO songDAO);
 	
 	int deleteSongById(int id);
 }

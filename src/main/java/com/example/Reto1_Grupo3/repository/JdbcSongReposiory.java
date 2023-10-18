@@ -39,18 +39,18 @@ public class JdbcSongReposiory implements SongRepository{
 		}
 	}
 	@Override
-	public int createSong(SongDTO songDTO) {
+	public int createSong(SongDAO songDAO) {
 		return jdbcTemplate.update(
 				"Insert into songs (url, title, author) values(?, ?, ?)",
-				new Object[] {songDTO.getUrl(),songDTO.getTitle(), songDTO.getAuthor() }
+				new Object[] {songDAO.getUrl(),songDAO.getTitle(), songDAO.getAuthor() }
 				);
 	}
 	@Override
-	public int updateSong(SongDTO songDTO) {
+	public int updateSong(SongDAO songDAO) {
 		return jdbcTemplate.update(
 				"UPDATE songs SET url = ?, title = ?, author = ? where id = ?", 
 				new Object[] {
-						songDTO.getUrl(),songDTO.getTitle(), songDTO.getAuthor(), songDTO.getId()
+						songDAO.getUrl(),songDAO.getTitle(), songDAO.getAuthor(), songDAO.getId()
 				}
 				);
 	}

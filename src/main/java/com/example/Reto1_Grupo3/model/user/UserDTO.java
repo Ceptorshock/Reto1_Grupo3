@@ -7,6 +7,7 @@ public class UserDTO {
 	private String surname;
 	private String email;
 	private String password;
+	private String oldPassword;
 	
 	
 	//Constructors
@@ -20,6 +21,16 @@ public class UserDTO {
 		this.surname = surname;
 		this.email = email;
 		this.password = password;
+	}
+	
+	public UserDTO(int id, String name, String surname, String email, String password, String oldPassword) {
+		super();
+		this.id = id;
+		this.name = name;
+		this.surname = surname;
+		this.email = email;
+		this.password = password;
+		this.oldPassword = oldPassword;
 	}
 	
 	//Getters and Setters
@@ -55,13 +66,26 @@ public class UserDTO {
 		this.password = password;
 	}
 	
-	//ToString
+	public String getOldPassword() {
+		return oldPassword;
+	}
 
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	
+	//ToString
 	@Override
 	public String toString() {
-		return "UserGetResponse [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email
-				+ ", password=" + password + "]";
+		return "UserDTO [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password="
+				+ password + ", oldPassword=" + oldPassword + "]";
 	}
+	
+	
+
+
+
 	
 	
 	

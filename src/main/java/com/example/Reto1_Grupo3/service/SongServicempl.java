@@ -6,7 +6,8 @@ import java.util.List;
 
 import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
-
+import com.example.Reto1_Grupo3.model.user.UserDAO;
+import com.example.Reto1_Grupo3.model.user.UserDTO;
 import com.example.Reto1_Grupo3.repository.SongRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -60,8 +61,24 @@ public class SongServicempl implements SongService{
 	@Override
 	public int createSong(SongDTO songDTO) {
 		// TODO Auto-generated method stub
-		return 0;
+		return songRepository.createSong(convertDTOtoDAO(songDTO));
 	}
 
 	
+	private SongDTO convertDAOtoDTO(SongDAO songDAO) {
+		return new SongDTO(
+				songDAO.getId(),
+				songDAO.getUrl(),
+				songDAO.getTitle(),
+				songDAO.getAuthor());
+				}
+	private SongDAO convertDTOtoDAO(SongDTO songDTO) {
+		return new SongDAO(
+				songDTO.getId(),
+				songDTO.getUrl(),
+				songDTO.getTitle(),
+				songDTO.getAuthor()
+				);	
+	}
+
 }
