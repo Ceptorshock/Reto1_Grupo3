@@ -10,6 +10,8 @@ public class SongPostRequest {
 	public SongPostRequest() {
 		
 	}
+
+
 	public SongPostRequest(int id, String url, String title, String author) {
 		super();
 		this.id = id;
@@ -17,33 +19,53 @@ public class SongPostRequest {
 		this.title = title;
 		this.author = author;
 	}
+
+
 	public int getId() {
 		return id;
 	}
+
+
 	public void setId(int id) {
 		this.id = id;
 	}
+
+
 	public String getUrl() {
 		return url;
 	}
+
+
 	public void setUrl(String url) {
 		this.url = url;
 	}
-	public String getTitulo() {
+
+
+	public String getTitle() {
 		return title;
 	}
-	public void setTitulo(String titulo) {
-		this.title = titulo;
+
+
+	public void setTitle(String title) {
+		this.title = title;
 	}
-	public String getAutor() {
+
+
+	public String getAuthor() {
 		return author;
 	}
-	public void setAutor(String author) {
+
+
+	public void setAuthor(String author) {
 		this.author = author;
 	}
-	
+
+
 	@Override
 	public String toString() {
 		return "SongPostRequest [id=" + id + ", url=" + url + ", title=" + title + ", author=" + author + "]";
 	}
+	
+	
+
 }
