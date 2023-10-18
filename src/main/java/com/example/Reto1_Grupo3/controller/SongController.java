@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.service.SongService;
 
 @RestController
@@ -17,7 +18,7 @@ public class SongController {
 	SongService songService;
 	
 	@GetMapping("/songs")
-	public List<Song> getSongs(){
+	public List<SongDAO> getSongs(){
 		return songService.findAll();
 	}
 }

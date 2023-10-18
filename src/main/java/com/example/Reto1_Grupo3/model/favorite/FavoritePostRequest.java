@@ -1,24 +1,19 @@
 package com.example.Reto1_Grupo3.model.favorite;
 
-
-public class FavoriteGetResponse {
+public class FavoritePostRequest {
 	private Integer id_user;
 	private Integer id_song;
-	private Integer id;
-	
-	
-	
+
 	@Override
 	public String toString() {
-		return "FavoriteGetResponse [id_user=" + id_user + ", id_song=" + id_song + ", id=" + id + "]";
+		return "FavoritePostRequest [id_user=" + id_user + ", id_song=" + id_song + "]";
 	}
-	public FavoriteGetResponse(Integer id_user, Integer id_song, Integer id) {
+	public FavoritePostRequest(Integer id_user, Integer id_song) {
 		super();
 		this.id_user = id_user;
 		this.id_song = id_song;
-		this.id = id;
 	}
-	public FavoriteGetResponse() {
+	public FavoritePostRequest() {
 		super();
 	}
 	public Integer getId_user() {
@@ -33,11 +28,6 @@ public class FavoriteGetResponse {
 	public void setId_song(Integer id_song) {
 		this.id_song = id_song;
 	}
-	public Integer getId() {
-		return id;
-	}
-	public void setId(Integer id) {
-		this.id = id;
-	}
-
+	
+	
 }

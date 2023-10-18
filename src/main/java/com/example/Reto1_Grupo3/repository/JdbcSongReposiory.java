@@ -8,17 +8,17 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.Reto1_Grupo3.model.song.Song;
+import com.example.Reto1_Grupo3.model.song.SongDAO;
 @Repository
 public class JdbcSongReposiory implements SongRepository{
 
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Override
-	public List<Song> findAll() {
+	public List<SongDAO> findAll() {
 		try {
 			return jdbcTemplate.query("SELECT * from songs", 
-					BeanPropertyRowMapper.newInstance(Song.class));
+					BeanPropertyRowMapper.newInstance(SongDAO.class));
 			
 		} catch (IncorrectResultSizeDataAccessException e) {
 			// TODO: handle exception
