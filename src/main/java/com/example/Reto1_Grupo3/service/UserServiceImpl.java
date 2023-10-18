@@ -6,6 +6,9 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotFoundException;
 import com.example.Reto1_Grupo3.model.user.UserDAO;
 import com.example.Reto1_Grupo3.model.user.UserDTO;
 import com.example.Reto1_Grupo3.repository.UserRepository;
@@ -17,7 +20,7 @@ public class UserServiceImpl implements UserService {
 	UserRepository userRepository;
 	
 	@Override
-	public List<UserDTO> findAll() {
+	public List<UserDTO> findAll() throws UserEmptyListException {
 		List<UserDAO> userDAO = userRepository.findAll();
 		List<UserDTO> userDTO = new ArrayList<UserDTO>();
 		for (UserDAO user : userDAO){
@@ -28,12 +31,12 @@ public class UserServiceImpl implements UserService {
 	
 
 	@Override
-	public int registerUser(UserDTO userDTO) {
+	public int registerUser(UserDTO userDTO) throws UserNotCreatedException {
 		return userRepository.registerUser(convertDTOtoDAO(userDTO));
 	}
 	
 	@Override
-	public boolean loginUser(UserDTO userDTO) {
+	public boolean loginUser(UserDTO userDTO) throws UserNotFoundException {
 		UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
 		System.out.println("BD:" + user.getPassword() + "/// Post:" + userDTO.getPassword()+"///");
 		if(user.getPassword().equals(userDTO.getPassword()))
@@ -46,7 +49,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public int changePassword(UserDTO userDTO) {
+	public int changePassword(UserDTO userDTO) throws UserNotFoundException {
 		UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
 		System.out.println("BD:" + user.getPassword() + "/// PUT:" + userDTO.getOldPassword()+"///");
 		if (user.getPassword().equals(userDTO.getOldPassword()) ) {
