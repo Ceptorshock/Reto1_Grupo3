@@ -37,11 +37,10 @@ public class SongController {
 	@GetMapping("/fav/{id}")
 
 
+
 	public ResponseEntity<List<SongGetResponse>> getAllFavorites(@PathVariable("id") Integer id )throws SongNotFoundException{	
 		try {
 		System.out.println("aa");
-
-
 
 		List<SongDTO> list = songService.findAllFavorite(id);
 		List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
