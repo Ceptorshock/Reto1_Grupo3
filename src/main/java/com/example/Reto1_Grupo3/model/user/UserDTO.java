@@ -5,6 +5,7 @@ public class UserDTO {
 	private int id;
 	private String name;
 	private String surname;
+	private String login;
 	private String email;
 	private String password;
 	private String oldPassword;
@@ -14,20 +15,22 @@ public class UserDTO {
 	
 	public UserDTO() {}
 	
-	public UserDTO(int id, String name, String surname, String email, String password) {
+	public UserDTO(int id, String name, String surname, String login, String email, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.login = login;
 		this.email = email;
 		this.password = password;
 	}
 	
-	public UserDTO(int id, String name, String surname, String email, String password, String oldPassword) {
+	public UserDTO(int id, String name, String surname, String login, String email, String password, String oldPassword) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.login = login;
 		this.email = email;
 		this.password = password;
 		this.oldPassword = oldPassword;
@@ -53,6 +56,16 @@ public class UserDTO {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -75,11 +88,10 @@ public class UserDTO {
 	}
 
 	
-	//ToString
 	@Override
 	public String toString() {
-		return "UserDTO [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email + ", password="
-				+ password + ", oldPassword=" + oldPassword + "]";
+		return "UserDTO [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email=" + email
+				+ ", password=" + password + ", oldPassword=" + oldPassword + "]";
 	}
 	
 	

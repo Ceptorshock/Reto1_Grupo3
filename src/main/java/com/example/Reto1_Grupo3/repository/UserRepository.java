@@ -12,6 +12,7 @@ public interface UserRepository {
 	List<UserDAO> findAll() throws UserEmptyListException;
 	int registerUser(UserDAO userDAO) throws UserNotCreatedException;
 	UserDAO findByEmail(String email) throws UserNotFoundException;
+	UserDAO findByLogin(String login) throws UserNotFoundException;
 	int changePassword(UserDAO userDAO);
 	
 }

@@ -5,6 +5,7 @@ public class UserDAO {
 	private int id;
 	private String name;
 	private String surname;
+	private String login;
 	private String email;
 	private String password;
 	
@@ -13,11 +14,12 @@ public class UserDAO {
 	
 	public UserDAO() {}
 	
-	public UserDAO(int id, String name, String surname, String email, String password) {
+	public UserDAO(int id, String name, String surname, String login, String email, String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.login = login;
 		this.email = email;
 		this.password = password;
 	}
@@ -42,6 +44,15 @@ public class UserDAO {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -59,7 +70,7 @@ public class UserDAO {
 
 	@Override
 	public String toString() {
-		return "UserGetResponse [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email
+		return "UserDAO [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email=" + email
 				+ ", password=" + password + "]";
 	}
 	
