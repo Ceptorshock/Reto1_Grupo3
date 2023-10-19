@@ -8,6 +8,7 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
 import com.example.Reto1_Grupo3.model.song.SongGetResponse;
@@ -58,6 +59,15 @@ public class JdbcSongReposiory implements SongRepository{
 	public int deleteSongById(int id) {
 		return jdbcTemplate.update(
 				"Delete from songs where id=?", id);
+	}
+	
+	@Override
+	public List<SongDAO> findAllFavorite(Integer id) {
+		try {
+			return jdbcTemplate.query("SELECT songs.id, songs.title, songs.author, songs.url FROM reto1.songs join favorite on songs.id = favorite.id_song where favorite.id_user = ?", BeanPropertyRowMapper.newInstance(SongDAO.class), id);			
+		} catch (Exception e) {
+			return null;
+		}
 	}
 	
 	

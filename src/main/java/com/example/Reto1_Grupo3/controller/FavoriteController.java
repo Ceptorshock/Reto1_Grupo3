@@ -25,12 +25,7 @@ public class FavoriteController {
 	
 	@Autowired
 	FavoriteService favoriteService;
-	
-	@GetMapping("/fav/{id}")
-	public List<FavoriteGetResponse> getAllFavorites(@PathVariable("id") Integer id ){		
-		return fromDTOToGetResponse(favoriteService.findAll(id));
-	}
-	
+		
 
 	@DeleteMapping("/fav/{id}")
 	public Integer deleteFavorite(@PathVariable("id") Integer id) {

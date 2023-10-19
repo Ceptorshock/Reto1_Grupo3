@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.example.Reto1_Grupo3.model.favorite.FavoriteGetResponse;
 import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
 import com.example.Reto1_Grupo3.model.song.SongGetResponse;
@@ -25,6 +26,17 @@ import com.example.Reto1_Grupo3.service.SongService;
 public class SongController {
 	@Autowired
 	SongService songService;
+	
+	@GetMapping("/fav/{id}")
+	public List<SongGetResponse> getAllFavorites(@PathVariable("id") Integer id ){		
+		System.out.println("aa");
+		List<SongDTO> list = songService.findAllFavorite(id);
+		List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
+		for (SongDTO songDTO : list) {
+			listPostRequest.add(convertDTOtoResponse(songDTO));
+		}
+		return listPostRequest;
+	}
 	
 	@GetMapping("/songs")
 	public List<SongGetResponse> getSongs(){

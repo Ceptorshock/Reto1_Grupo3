@@ -16,11 +16,6 @@ public class FavoriteServiceImpl implements FavoriteService{
 
 	@Autowired
 	FavoriteRepository favoriteRepository;
-	
-	@Override
-	public List<FavoriteDTO> findAll(Integer id) {
-		return fromDAOToDTO(favoriteRepository.findAll(id));
-	}
 
 	@Override
 	public Integer deleteFavorite(Integer id) {

@@ -2,6 +2,7 @@ package com.example.Reto1_Grupo3.repository;
 
 import java.util.List;
 
+import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
 
@@ -18,4 +19,6 @@ public interface SongRepository {
 	int updateSong(SongDAO songDAO);
 	
 	int deleteSongById(int id);
+	
+	List<SongDAO> findAllFavorite(Integer id);
 }

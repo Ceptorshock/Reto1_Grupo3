@@ -20,14 +20,6 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	
-	@Override
-	public List<FavoriteDAO> findAll(Integer id) {
-		try {
-			return jdbcTemplate.query("select * from favorite where id_user = ?", BeanPropertyRowMapper.newInstance(FavoriteDAO.class), id);			
-		} catch (Exception e) {
-			return null;
-		}
-	}
 
 	@Override
 	public Integer addFavorite(FavoritePostRequest favorite) {

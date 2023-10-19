@@ -4,13 +4,17 @@ import java.util.ArrayList;
 
 import java.util.List;
 
+import com.example.Reto1_Grupo3.model.favorite.FavoriteDTO;
 import com.example.Reto1_Grupo3.model.song.SongDAO;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
+import com.example.Reto1_Grupo3.model.song.SongGetResponse;
 import com.example.Reto1_Grupo3.model.user.UserDAO;
 import com.example.Reto1_Grupo3.model.user.UserDTO;
 import com.example.Reto1_Grupo3.repository.SongRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RestController;
 
 
@@ -57,6 +61,17 @@ public class SongServicempl implements SongService{
 		return listSongsDTO;
 		
 	}
+	
+	@Override
+	public List<SongDTO> findAllFavorite(Integer id) {
+		List<SongDAO> list = songRepository.findAllFavorite(id);
+		List<SongDTO>  listPostRequest = new ArrayList<SongDTO>();
+		for (SongDAO songDAO : list) {
+			listPostRequest.add(convertDAOtoDTO(songDAO));
+		}
+		return listPostRequest;
+	}
+	
 
 	@Override
 	public int createSong(SongDTO songDTO) {
