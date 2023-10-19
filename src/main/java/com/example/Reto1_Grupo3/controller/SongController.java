@@ -4,86 +4,123 @@ import java.util.ArrayList;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.example.Reto1_Grupo3.model.favorite.FavoriteGetResponse;
-import com.example.Reto1_Grupo3.model.song.SongDAO;
+import com.example.Reto1_Grupo3.exceptions.song.SongEmptyListException;
+import com.example.Reto1_Grupo3.exceptions.song.SongNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.song.SongNotFoundException;
+
 import com.example.Reto1_Grupo3.model.song.SongDTO;
 import com.example.Reto1_Grupo3.model.song.SongGetResponse;
 import com.example.Reto1_Grupo3.model.song.SongPostRequest;
 import com.example.Reto1_Grupo3.service.SongService;
 
-
+import jakarta.validation.Valid;
 
 
 @RestController
-
+@RequestMapping("api")
 public class SongController {
 	@Autowired
 	SongService songService;
-	
+
 	@GetMapping("/fav/{id}")
-	public List<SongGetResponse> getAllFavorites(@PathVariable("id") Integer id ){		
+	public ResponseEntity<List<SongGetResponse>> getAllFavorites(@PathVariable("id") Integer id )throws SongNotFoundException{	
+		try {
 		System.out.println("aa");
 		List<SongDTO> list = songService.findAllFavorite(id);
 		List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
 		for (SongDTO songDTO : list) {
 			listPostRequest.add(convertDTOtoResponse(songDTO));
 		}
-		return listPostRequest;
-	}
 	
+		return new ResponseEntity<>(listPostRequest,HttpStatus.ACCEPTED);
+		
+		}catch(SongNotFoundException e) {
+		
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);
+		}
+	}
+
 	@GetMapping("/songs")
-	public List<SongGetResponse> getSongs(){
+	public ResponseEntity<List<SongGetResponse>> getSongs() throws SongEmptyListException{
+		try {
 		List<SongDTO> listSongsDAO = songService.findAll();
 		List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
-		
+
 		for(SongDTO songDTO: listSongsDAO ) {
-			SongGetResponse songGetResponse = new SongGetResponse();
-			songGetResponse.setId(songDTO.getId());
-			songGetResponse.setUrl(songDTO.getUrl());
-			songGetResponse.setTitle(songDTO.getTitle());
-			songGetResponse.setAuthor(songDTO.getAuthor());
-			
-			listSongsGetREsponse.add(songGetResponse);
-			
-			
+
+			listSongsGetREsponse.add(convertDTOtoResponse(songDTO));
 		}
-		return listSongsGetREsponse;
+		
+		return new ResponseEntity<>(listSongsGetREsponse, HttpStatus.ACCEPTED);
+		}catch (SongEmptyListException e){
+		
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);
+		}
+
+
 	}
 	@GetMapping("/songs/{id}")
-	public List<SongGetResponse> getSongById(@PathVariable("id") int id){
+	public ResponseEntity<List<SongGetResponse>> getSongById(@PathVariable("id") int id)throws SongNotFoundException{
 		List<SongDTO> listSongsDAO = songService.findSongById(id);
 		List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
-		
-		for(SongDTO songDTO: listSongsDAO ) {
-			SongGetResponse songGetResponse = new SongGetResponse();
-			songGetResponse.setId(songDTO.getId());
-			songGetResponse.setUrl(songDTO.getUrl());
-			songGetResponse.setTitle(songDTO.getTitle());
-			songGetResponse.setAuthor(songDTO.getAuthor());
-			
-			listSongsGetREsponse.add(songGetResponse);
-			
-			
-		}
-		return listSongsGetREsponse;
-				
-	}
-	
-	@PostMapping("/song")
-	public int createSong(@RequestBody SongPostRequest songPostRequest) {
-		
-		songService.createSong(SongDTOconvertRequestToDTO(songPostRequest));
 
-		
-		return 0;
+		for(SongDTO songDTO: listSongsDAO ) {
+
+			listSongsGetREsponse.add(convertDTOtoResponse(songDTO));
+
+		}
+		return new ResponseEntity<> (listSongsGetREsponse, HttpStatus.ACCEPTED);
+
 	}
+
+	@PostMapping("/songs")
+	public ResponseEntity<?> createSong(@Valid @RequestBody SongPostRequest songPostRequest) throws SongNotCreatedException{
+
+		try {
+			
+			return new ResponseEntity<>(songService.createSong(SongDTOconvertRequestToDTO(songPostRequest)), HttpStatus.CREATED);
+		} catch (SongNotCreatedException e) {
+			
+			throw new ResponseStatusException(HttpStatus.CREATED,e.getMessage(),e);
+		}
+	}
+	@DeleteMapping("/songs/{id}")
+	public ResponseEntity<?> deleteSong(@PathVariable("id") int id) throws SongNotFoundException{
+
+		try {
+			return new ResponseEntity<>(songService.deleteSongById(id), HttpStatus.NO_CONTENT);
+		} catch (SongNotFoundException e) {
+			// TODO Auto-generated catch block
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT,e.getMessage(),e);
+		}	
+	}
+
+	@PutMapping("/songs/{id}")
+	public ResponseEntity<?>  updateSong(@PathVariable("id") int id, @RequestBody SongPostRequest songPostRequest) throws SongNotFoundException{
+		songPostRequest.setId(id);
+
+		try {
+			return new ResponseEntity<>(songService.updateSong(SongDTOconvertRequestToDTO(songPostRequest)),HttpStatus.NO_CONTENT);
+		} catch (SongNotFoundException e) {
+			// TODO Auto-generated catch block
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT,e.getMessage(),e);
+		
+		}
+
+	}
+
 	private SongDTO SongDTOconvertRequestToDTO(SongPostRequest songPostRequest) {
 		SongDTO songDTO = new SongDTO(
 				songPostRequest.getId(),

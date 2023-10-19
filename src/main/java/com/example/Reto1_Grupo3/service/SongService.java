@@ -2,17 +2,28 @@ package com.example.Reto1_Grupo3.service;
 
 import java.util.List;
 
+import com.example.Reto1_Grupo3.exceptions.song.SongEmptyListException;
+import com.example.Reto1_Grupo3.exceptions.song.SongNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.song.SongNotFoundException;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
 
 
 public interface SongService {
 	
-	List<SongDTO> findAll();
+	List<SongDTO> findAll() throws SongEmptyListException;
 
-	List<SongDTO> findSongById(int id);
+	List<SongDTO> findSongById(int id) throws SongNotFoundException;
 
-	int createSong(SongDTO songDTO);
+	int createSong(SongDTO songDTO) throws SongNotCreatedException;
 	
-	List<SongDTO> findAllFavorite(Integer id);
+	int deleteSongById(int id)throws SongNotFoundException;
+	
+	int updateSong(SongDTO songDTOconvertRequestToDTO) throws SongNotFoundException;
+	
+	List<SongDTO> findAllFavorite(Integer id) throws SongNotFoundException;
+
+	
+
+	
 
 }

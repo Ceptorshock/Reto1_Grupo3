@@ -1,8 +1,19 @@
 package com.example.Reto1_Grupo3.model.song;
 
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class SongPostRequest {
+	@NotEmpty
+	@NotBlank
+	@NotNull
 	private int id;
+	@NotEmpty
+	@NotBlank
+	@NotNull
 	private String url;
+	
 	private String title;
 	private String author;
 	
@@ -12,7 +23,13 @@ public class SongPostRequest {
 	}
 
 
-	public SongPostRequest(int id, String url, String title, String author) {
+	public SongPostRequest(
+			@NotEmpty(message = "No puede estar vacio") @NotBlank(message = "No puede estar en blanco")
+			@NotNull (message = "No puede ser nulo") int id, 
+			@NotEmpty(message = "No puede estar vacio") @NotBlank(message = "No puede estar en blanco")
+			@NotNull (message = "No puede ser nulo") String url,
+			String title, String author) {
+		
 		super();
 		this.id = id;
 		this.url = url;
