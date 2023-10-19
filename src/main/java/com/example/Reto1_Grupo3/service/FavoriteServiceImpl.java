@@ -6,6 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotDeletedException;
 import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.favorite.FavoriteDTO;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
@@ -18,17 +20,13 @@ public class FavoriteServiceImpl implements FavoriteService{
 	FavoriteRepository favoriteRepository;
 
 	@Override
-	public Integer deleteFavorite(Integer id) {
+	public Integer deleteFavorite(Integer id) throws FavoriteNotDeletedException {
 		return favoriteRepository.deleteFavorite(id); 
 	}
 
 	@Override
-	public Integer addFavorite(FavoritePostRequest favorite) {
-		if(!favoriteRepository.findFavorite(favorite)) {
-			return favoriteRepository.addFavorite(favorite);			
-		}else {
-			return 0;
-		}
+	public Integer addFavorite(FavoritePostRequest favorite) throws FavoriteNotCreatedException {
+		return favoriteRepository.addFavorite(favorite);	
 	}
 	
 	private List<FavoriteDTO> fromDAOToDTO(List<FavoriteDAO> listFavoriteDAO) {
