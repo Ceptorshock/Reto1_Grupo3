@@ -22,6 +22,8 @@ import com.example.Reto1_Grupo3.model.user.UserGetResponse;
 import com.example.Reto1_Grupo3.model.user.UserPostRequest;
 import com.example.Reto1_Grupo3.service.UserService;
 
+import jakarta.validation.Valid;
+
 
 @RestController
 @RequestMapping("api")
@@ -46,7 +48,7 @@ public class UserController {
 	
 	
 	@PostMapping("/register")
-	public ResponseEntity<?> register(@RequestBody UserPostRequest userPostRequest) throws UserNotCreatedException {
+	public ResponseEntity<?> register(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotCreatedException {
 		try {
 			userService.registerUser(convertRequestToDTO(userPostRequest));
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -56,12 +58,18 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public boolean login(@RequestBody UserPostRequest userPostRequest) throws UserNotFoundException {
-			return userService.loginUser(convertRequestToDTO(userPostRequest));
+	public ResponseEntity<?> login(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotFoundException {
+		try {
+			userService.loginUser(convertRequestToDTO(userPostRequest));
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+		} catch (UserNotFoundException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
+		}
+			
 	}
 	
 	@PutMapping("/changePassword")
-	public ResponseEntity<?> changePassword(@RequestBody UserPostRequest userPostRequest) throws UserNotFoundException {
+	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotFoundException {
 		try {
 			userService.changePassword(convertRequestToDTO(userPostRequest));
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
@@ -78,6 +86,7 @@ public class UserController {
 				userPostRequest.getId(),
 				userPostRequest.getName(),
 				userPostRequest.getSurname(),
+				userPostRequest.getLogin(),
 				userPostRequest.getEmail(),
 				userPostRequest.getPassword());
 		if (userPostRequest.getOldPassword() != null) {
@@ -91,6 +100,7 @@ public class UserController {
 				userDTO.getId(),
 				userDTO.getName(),
 				userDTO.getSurname(),
+				userDTO.getLogin(),
 				userDTO.getEmail(),
 				userDTO.getPassword()
 				);	

@@ -37,7 +37,8 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean loginUser(UserDTO userDTO) throws UserNotFoundException {
-		UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
+		//UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
+		UserDTO user = convertDAOtoDTO(userRepository.findByLogin(userDTO.getEmail()));
 		System.out.println("BD:" + user.getPassword() + "/// Post:" + userDTO.getPassword()+"///");
 		if(user.getPassword().equals(userDTO.getPassword()))
 		{
@@ -65,6 +66,7 @@ public class UserServiceImpl implements UserService {
 				userDAO.getId(),
 				userDAO.getName(),
 				userDAO.getSurname(),
+				userDAO.getLogin(),
 				userDAO.getEmail(),
 				userDAO.getPassword()
 				);	
@@ -75,6 +77,7 @@ public class UserServiceImpl implements UserService {
 				userDTO.getId(),
 				userDTO.getName(),
 				userDTO.getSurname(),
+				userDTO.getLogin(),
 				userDTO.getEmail(),
 				userDTO.getPassword()
 				);	

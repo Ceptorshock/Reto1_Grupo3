@@ -1,11 +1,8 @@
 package com.example.Reto1_Grupo3.repository;
 
-import java.sql.SQLException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -39,8 +36,8 @@ public class UserRepositoryImpl implements UserRepository {
 	public int registerUser(UserDAO userDAO) throws UserNotCreatedException{
 		try {
 			return jdbcTemplate.update(
-					"INSERT INTO users (name, surname, email, password) VALUES(?,?,?,?)",
-					new Object[] {userDAO.getName(),userDAO.getSurname(),userDAO.getEmail(),userDAO.getPassword()}
+					"INSERT INTO users (name, surname,login, email, password) VALUES(?,?,?,?,?)",
+					new Object[] {userDAO.getName(),userDAO.getSurname(),userDAO.getLogin(),userDAO.getEmail(),userDAO.getPassword()}
 					);
 		} catch (Exception e) {
 			throw new UserNotCreatedException("User email already in use in Repository");
@@ -56,10 +53,18 @@ public class UserRepositoryImpl implements UserRepository {
 					email);
 		} catch (EmptyResultDataAccessException e) {
 			throw new UserNotFoundException("User Not Found in Repository");
-		}
-			
-			
-			
+		}		
+	}
+	
+	public UserDAO findByLogin(String login) throws UserNotFoundException {
+		try {
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM users WHERE email = ?",
+					BeanPropertyRowMapper.newInstance(UserDAO.class),
+					login);
+		} catch (EmptyResultDataAccessException e) {
+			throw new UserNotFoundException("User Not Found in Repository");
+		}		
 	}
 	
 	public int changePassword(UserDAO userDAO) {

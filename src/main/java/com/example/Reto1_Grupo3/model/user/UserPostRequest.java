@@ -1,12 +1,38 @@
 package com.example.Reto1_Grupo3.model.user;
 
+import jakarta.validation.Valid;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotEmpty;
+import jakarta.validation.constraints.NotNull;
+
 public class UserPostRequest {
 
 	private int id;
+	@NotNull
+	@NotBlank
+	@NotEmpty
 	private String name;
+	@NotNull
+	@NotBlank
+	@NotEmpty
 	private String surname;
+	@NotNull
+	@NotBlank
+	@NotEmpty
+	private String login;
+	@Email
+	@NotNull
+	@NotBlank
+	@NotEmpty
 	private String email;
+	@NotNull
+	@NotBlank
+	@NotEmpty
 	private String password;
+	@NotNull
+	@NotBlank
+	@NotEmpty
 	private String oldPassword;
 	
 	
@@ -14,33 +40,49 @@ public class UserPostRequest {
 	
 	public UserPostRequest() {}
 	
-	public UserPostRequest(String email, String password) {
+	public UserPostRequest(@NotNull @NotBlank @NotEmpty String login,
+			@NotNull @NotBlank @NotEmpty String password) {
 		super();
-		this.email = email;
+		this.login = login;
 		this.password = password;
 	}
 	
-	public UserPostRequest(String email, String password, String oldPassword) {
+	public UserPostRequest(@NotNull @NotBlank @NotEmpty String login,
+			@NotNull @NotBlank @NotEmpty String password,
+			@NotNull @NotBlank @NotEmpty String oldPassword) {
 		super();
-		this.email = email;
+		this.login = login;
 		this.password = password;
 		this.oldPassword = oldPassword;
 	}
 	
-	public UserPostRequest(int id, String name, String surname, String email, String password) {
+	public UserPostRequest(int id,
+			@NotNull @NotBlank @NotEmpty String name,
+			@NotNull @NotBlank @NotEmpty String surname,
+			@NotNull @NotBlank @NotEmpty String login,
+			@NotNull @NotBlank @NotEmpty @Email String email,
+			@NotNull @NotBlank @NotEmpty String password) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.login = login;
 		this.email = email;
 		this.password = password;
 	}
 	
-	public UserPostRequest(int id, String name, String surname, String email, String password, String oldPassword) {
+	public UserPostRequest(int id, 
+			@NotNull @NotBlank @NotEmpty String name,
+			@NotNull @NotBlank @NotEmpty String surname,
+			@NotNull @NotBlank @NotEmpty String login,
+			@NotNull @NotBlank @NotEmpty @Email String email,
+			@NotNull @NotBlank @NotEmpty String password,
+			@NotNull @NotBlank @NotEmpty String oldPassword) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
+		this.login = login;
 		this.email = email;
 		this.password = password;
 		this.oldPassword = oldPassword;
@@ -66,6 +108,15 @@ public class UserPostRequest {
 	public void setSurname(String surname) {
 		this.surname = surname;
 	}
+	
+	public String getLogin() {
+		return login;
+	}
+
+	public void setLogin(String login) {
+		this.login = login;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -90,9 +141,13 @@ public class UserPostRequest {
 	
 	@Override
 	public String toString() {
-		return "UserPostRequest [id=" + id + ", name=" + name + ", surname=" + surname + ", email=" + email
-				+ ", password=" + password + ", oldPassword=" + oldPassword + "]";
+		return "UserPostRequest [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email="
+				+ email + ", password=" + password + ", oldPassword=" + oldPassword + "]";
 	}
+
+	
+	
+	
 	
 	
 	
