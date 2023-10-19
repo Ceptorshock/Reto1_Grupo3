@@ -29,7 +29,6 @@ public class SongController {
 	
 	@GetMapping("/fav/{id}")
 	public List<SongGetResponse> getAllFavorites(@PathVariable("id") Integer id ){		
-		System.out.println("aa");
 		List<SongDTO> list = songService.findAllFavorite(id);
 		List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
 		for (SongDTO songDTO : list) {

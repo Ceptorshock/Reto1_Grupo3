@@ -1,54 +1,47 @@
 package com.example.Reto1_Grupo3.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.server.ResponseStatusException;
 
-import com.example.Reto1_Grupo3.model.favorite.FavoriteDTO;
-import com.example.Reto1_Grupo3.model.favorite.FavoriteGetResponse;
+import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotDeletedException;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
-import com.example.Reto1_Grupo3.model.song.SongDAO;
-import com.example.Reto1_Grupo3.model.song.SongDTO;
-import com.example.Reto1_Grupo3.model.song.SongGetResponse;
 import com.example.Reto1_Grupo3.service.FavoriteService;
-import com.example.Reto1_Grupo3.service.SongService;
 
+import jakarta.validation.Valid;
 @RestController
 public class FavoriteController {
 	
 	@Autowired
 	FavoriteService favoriteService;
-		
-
+	
+	
 	@DeleteMapping("/fav/{id}")
-	public Integer deleteFavorite(@PathVariable("id") Integer id) {
-		return favoriteService.deleteFavorite(id);
+	public ResponseEntity<Integer> deleteFavorite(@PathVariable("id") Integer id) throws FavoriteNotDeletedException {
+		try {
+			return new ResponseEntity<>(favoriteService.deleteFavorite(id), HttpStatus.OK);
+		} catch (FavoriteNotDeletedException e) {
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);
+		}
 	}
+	
 	
 	@PostMapping("/fav")
-	public Integer createFavorite(@RequestBody FavoritePostRequest favorite) {
-		return favoriteService.addFavorite(favorite);
+	public ResponseEntity<Integer> createFavorite(@Valid @RequestBody FavoritePostRequest favorite)  throws FavoriteNotDeletedException {
+		try {
+			return new ResponseEntity<Integer>(favoriteService.addFavorite(favorite), HttpStatus.CREATED);
+		} catch (FavoriteNotCreatedException e) {
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST, e.getMessage(), e);
+		}
+	
 	}
 	
-	private List<FavoriteGetResponse> fromDTOToGetResponse(List<FavoriteDTO> listFavoriteDTO) {	
-		List<FavoriteGetResponse> listFavoriteGetResponse = new ArrayList<FavoriteGetResponse>();
-		
-		for (FavoriteDTO favoriteDTO : listFavoriteDTO) {
-			listFavoriteGetResponse.add(
-					new FavoriteGetResponse(
-							favoriteDTO.getId(), 
-							favoriteDTO.getId_song(), 
-							favoriteDTO.getId_user()));
-		}
-		
-		return listFavoriteGetResponse;
-	}
 
 }

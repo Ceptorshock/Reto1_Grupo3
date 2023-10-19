@@ -1,13 +1,20 @@
 package com.example.Reto1_Grupo3.repository;
 
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
+import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
+import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotDeletedException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
 import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
 import com.example.Reto1_Grupo3.service.FavoriteService;
@@ -22,35 +29,29 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
 	
 
 	@Override
-	public Integer addFavorite(FavoritePostRequest favorite) {
-		return jdbcTemplate.update("insert into favorite (id_song, id_user) Values (?,?)", 
-				new Object[] {
-						favorite.getId_song(), favorite.getId_user()
-				}
-		);
-	}
-
-	@Override
-	public Integer deleteFavorite(Integer id) {
-		// TODO Auto-generated method stub
-		return jdbcTemplate.update("Delete from favorite where id = ?", id);
-		
-	}
-
-	@Override
-	public boolean findFavorite(FavoritePostRequest favorite) {
+	public Integer addFavorite(FavoritePostRequest favorite) throws FavoriteNotCreatedException {
 		try {
-			FavoriteDAO favoriteDAO = jdbcTemplate.queryForObject("Select * from favorite where id_song = ? and id_user = ?", BeanPropertyRowMapper.newInstance(FavoriteDAO.class), favorite.getId_song(), favorite.getId_user());			
-			if(favorite.getId_song() == favoriteDAO.getId_song() && favorite.getId_user() == favoriteDAO.getId_user()) {
-				return true;
-			}else {
-				System.out.println("aaa");
-				return false;
+			return jdbcTemplate.update("insert into favorite (id_song, id_user) Values (?,?)", 
+					new Object[] {
+							favorite.getId_song(), favorite.getId_user()
 			}
-		} catch (EmptyResultDataAccessException e) {
-			System.out.println("aaa2131");
-			return false;
+					);			
+		} catch (DuplicateKeyException e) {
+			System.out.println(e);
+			throw new FavoriteNotCreatedException("Favorite is created");
 		}
 	}
+
+	@Override
+	public Integer deleteFavorite(Integer id) throws FavoriteNotDeletedException {
+		// TODO Auto-generated method stub
+		try {
+			return jdbcTemplate.update("Delete from favorite where id = ?", id);			
+		}
+		catch (IncorrectResultSizeDataAccessException e) {
+			throw new FavoriteNotDeletedException("Favorite can´t be deleted");
+		}
+	}
+
 
 }
