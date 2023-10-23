@@ -5,9 +5,7 @@ import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
 public class SongPostRequest {
-	@NotEmpty
-	@NotBlank
-	@NotNull
+
 	private int id;
 	@NotEmpty
 	@NotBlank

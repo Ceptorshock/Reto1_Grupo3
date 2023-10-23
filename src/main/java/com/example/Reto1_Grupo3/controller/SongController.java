@@ -93,11 +93,11 @@ public class SongController {
 	public ResponseEntity<?> createSong(@Valid @RequestBody SongPostRequest songPostRequest) throws SongNotCreatedException{
 
 		try {
-			
-			return new ResponseEntity<>(songService.createSong(SongDTOconvertRequestToDTO(songPostRequest)), HttpStatus.CREATED);
+			songService.createSong(SongDTOconvertRequestToDTO(songPostRequest));
+			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (SongNotCreatedException e) {
 			
-			throw new ResponseStatusException(HttpStatus.CREATED,e.getMessage(),e);
+			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
 		}
 	}
 	@DeleteMapping("/songs/{id}")
