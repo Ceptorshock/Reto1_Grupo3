@@ -1,4 +1,4 @@
-package com.example.Reto1_Grupo3.exceptions.users;
+package com.example.Reto1_Grupo3.exceptions.favourites;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.ResponseStatus;

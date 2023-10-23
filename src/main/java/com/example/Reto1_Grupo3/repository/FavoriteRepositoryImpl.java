@@ -12,8 +12,8 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotCreatedException;
-import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotDeletedException;
+import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotDeletedException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
 import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;

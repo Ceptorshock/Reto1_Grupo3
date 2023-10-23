@@ -10,8 +10,8 @@ import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
-import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotCreatedException;
-import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotDeletedException;
+import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotDeletedException;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
 import com.example.Reto1_Grupo3.service.FavoriteService;
 

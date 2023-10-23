@@ -17,6 +17,7 @@ import org.springframework.web.server.ResponseStatusException;
 import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotFoundException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotModifiedException;
 import com.example.Reto1_Grupo3.model.user.UserDTO;
 import com.example.Reto1_Grupo3.model.user.UserGetResponse;
 import com.example.Reto1_Grupo3.model.user.UserPostRequest;
@@ -69,11 +70,11 @@ public class UserController {
 	}
 	
 	@PutMapping("/changePassword")
-	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotFoundException {
+	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotFoundException,UserNotModifiedException {
 		try {
 			userService.changePassword(convertRequestToDTO(userPostRequest));
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
-		} catch (UserNotFoundException e) {
+		} catch (UserNotFoundException | UserNotModifiedException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
 		}
 			

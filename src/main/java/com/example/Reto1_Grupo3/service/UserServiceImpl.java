@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotFoundException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotModifiedException;
 import com.example.Reto1_Grupo3.model.user.UserDAO;
 import com.example.Reto1_Grupo3.model.user.UserDTO;
 import com.example.Reto1_Grupo3.repository.UserRepository;
@@ -50,7 +51,7 @@ public class UserServiceImpl implements UserService {
 	}
 	
 	@Override
-	public int changePassword(UserDTO userDTO) throws UserNotFoundException {
+	public int changePassword(UserDTO userDTO) throws UserNotFoundException, UserNotModifiedException {
 		UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
 		System.out.println("BD:" + user.getPassword() + "/// PUT:" + userDTO.getOldPassword()+"///");
 		if (user.getPassword().equals(userDTO.getOldPassword()) ) {

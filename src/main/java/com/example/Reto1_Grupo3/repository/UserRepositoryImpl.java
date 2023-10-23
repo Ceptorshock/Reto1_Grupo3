@@ -3,6 +3,8 @@ package com.example.Reto1_Grupo3.repository;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
+import org.springframework.dao.DuplicateKeyException;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -12,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotFoundException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotModifiedException;
 import com.example.Reto1_Grupo3.model.user.UserDAO;
 
 @Repository
@@ -39,7 +42,7 @@ public class UserRepositoryImpl implements UserRepository {
 					"INSERT INTO users (name, surname,login, email, password) VALUES(?,?,?,?,?)",
 					new Object[] {userDAO.getName(),userDAO.getSurname(),userDAO.getLogin(),userDAO.getEmail(),userDAO.getPassword()}
 					);
-		} catch (Exception e) {
+		} catch (DuplicateKeyException e) {
 			throw new UserNotCreatedException("User email already in use in Repository");
 		}
 	}
@@ -67,11 +70,16 @@ public class UserRepositoryImpl implements UserRepository {
 		}		
 	}
 	
-	public int changePassword(UserDAO userDAO) {
-		return jdbcTemplate.update(
-				"UPDATE users SET password = ? WHERE id = ?",
-				new Object[] {userDAO.getPassword(),userDAO.getId()}
-				);
+	public int changePassword(UserDAO userDAO) throws UserNotModifiedException {
+		try {
+			return jdbcTemplate.update(
+					"UPDATE users SET password = ? WHERE id = ?",
+					new Object[] {userDAO.getPassword(),userDAO.getId()}
+					);
+		} catch (DataAccessException e) {
+			throw new UserNotModifiedException("User not modified in Repository");
+		}
+		
 	}
 
 	

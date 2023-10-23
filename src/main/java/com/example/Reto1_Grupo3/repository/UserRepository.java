@@ -5,6 +5,7 @@ import java.util.List;
 import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
 import com.example.Reto1_Grupo3.exceptions.users.UserNotFoundException;
+import com.example.Reto1_Grupo3.exceptions.users.UserNotModifiedException;
 import com.example.Reto1_Grupo3.model.user.UserDAO;
 
 public interface UserRepository {
@@ -13,6 +14,6 @@ public interface UserRepository {
 	int registerUser(UserDAO userDAO) throws UserNotCreatedException;
 	UserDAO findByEmail(String email) throws UserNotFoundException;
 	UserDAO findByLogin(String login) throws UserNotFoundException;
-	int changePassword(UserDAO userDAO);
+	int changePassword(UserDAO userDAO) throws UserNotModifiedException;
 	
 }

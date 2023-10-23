@@ -6,8 +6,8 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotCreatedException;
-import com.example.Reto1_Grupo3.exceptions.users.FavoriteNotDeletedException;
+import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotCreatedException;
+import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotDeletedException;
 import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.favorite.FavoriteDTO;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
