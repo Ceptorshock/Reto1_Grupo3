@@ -15,6 +15,19 @@ public class UserDTO {
 	
 	public UserDTO() {}
 	
+	public UserDTO(String login, String password) {
+		super();
+		this.login = login;
+		this.password = password;
+	}
+	
+	public UserDTO(String login, String password, String oldPassword) {
+		super();
+		this.login = login;
+		this.password = password;
+		this.oldPassword = oldPassword;
+	}
+	
 	public UserDTO(int id, String name, String surname, String login, String email, String password) {
 		super();
 		this.id = id;
@@ -23,17 +36,6 @@ public class UserDTO {
 		this.login = login;
 		this.email = email;
 		this.password = password;
-	}
-	
-	public UserDTO(int id, String name, String surname, String login, String email, String password, String oldPassword) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.login = login;
-		this.email = email;
-		this.password = password;
-		this.oldPassword = oldPassword;
 	}
 	
 	//Getters and Setters

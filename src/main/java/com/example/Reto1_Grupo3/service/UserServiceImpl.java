@@ -38,9 +38,7 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public boolean loginUser(UserDTO userDTO) throws UserNotFoundException {
-		//UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
-		UserDTO user = convertDAOtoDTO(userRepository.findByLogin(userDTO.getEmail()));
-		System.out.println("BD:" + user.getPassword() + "/// Post:" + userDTO.getPassword()+"///");
+		UserDTO user = convertDAOtoDTO(userRepository.findByLogin(userDTO.getLogin()));
 		if(user.getPassword().equals(userDTO.getPassword()))
 		{
 			return true;
@@ -52,13 +50,13 @@ public class UserServiceImpl implements UserService {
 	
 	@Override
 	public int changePassword(UserDTO userDTO) throws UserNotFoundException, UserNotModifiedException {
-		UserDTO user = convertDAOtoDTO(userRepository.findByEmail(userDTO.getEmail()));
-		System.out.println("BD:" + user.getPassword() + "/// PUT:" + userDTO.getOldPassword()+"///");
-		if (user.getPassword().equals(userDTO.getOldPassword()) ) {
+		UserDTO user = convertDAOtoDTO(userRepository.findByLogin(userDTO.getLogin()));
+		System.out.println("BD:" + user.getPassword() + "/// PUT:" + userDTO.getOldPassword()+"/// NEW PASSWORD:" + userDTO.getPassword());
+		if (user.getPassword().contentEquals(userDTO.getOldPassword())) {
 			user.setPassword(userDTO.getPassword());
 			return userRepository.changePassword(convertDTOtoDAO(user));
 		} else {
-			return 0;
+			throw new UserNotModifiedException("User not modified");
 		}
 	}
 

@@ -59,10 +59,11 @@ public class UserRepositoryImpl implements UserRepository {
 		}		
 	}
 	
+	
 	public UserDAO findByLogin(String login) throws UserNotFoundException {
 		try {
 			return jdbcTemplate.queryForObject(
-					"SELECT * FROM users WHERE email = ?",
+					"SELECT * FROM users WHERE login = ?",
 					BeanPropertyRowMapper.newInstance(UserDAO.class),
 					login);
 		} catch (EmptyResultDataAccessException e) {

@@ -14,6 +14,12 @@ public class UserDAO {
 	
 	public UserDAO() {}
 	
+	public UserDAO(String login, String password) {
+		super();
+		this.login = login;
+		this.password = password;
+	}
+	
 	public UserDAO(int id, String name, String surname, String login, String email, String password) {
 		super();
 		this.id = id;
