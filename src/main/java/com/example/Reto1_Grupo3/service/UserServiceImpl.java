@@ -51,12 +51,11 @@ public class UserServiceImpl implements UserService {
 	@Override
 	public int changePassword(UserDTO userDTO) throws UserNotFoundException, UserNotModifiedException {
 		UserDTO user = convertDAOtoDTO(userRepository.findByLogin(userDTO.getLogin()));
-		System.out.println("BD:" + user.getPassword() + "/// PUT:" + userDTO.getOldPassword()+"/// NEW PASSWORD:" + userDTO.getPassword());
 		if (user.getPassword().contentEquals(userDTO.getOldPassword())) {
 			user.setPassword(userDTO.getPassword());
 			return userRepository.changePassword(convertDTOtoDAO(user));
 		} else {
-			throw new UserNotModifiedException("User not modified");
+			throw new UserNotModifiedException("User's old password wrong.");
 		}
 	}
 
