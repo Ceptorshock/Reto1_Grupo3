@@ -21,6 +21,8 @@ import com.example.Reto1_Grupo3.exceptions.users.UserNotModifiedException;
 import com.example.Reto1_Grupo3.model.user.UserDTO;
 import com.example.Reto1_Grupo3.model.user.UserGetResponse;
 import com.example.Reto1_Grupo3.model.user.UserPostRequest;
+import com.example.Reto1_Grupo3.model.user.UserLoginRequest;
+import com.example.Reto1_Grupo3.model.user.UserPutRequest;
 import com.example.Reto1_Grupo3.service.UserService;
 
 import jakarta.validation.Valid;
@@ -51,7 +53,7 @@ public class UserController {
 	@PostMapping("/register")
 	public ResponseEntity<?> register(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotCreatedException {
 		try {
-			userService.registerUser(convertRequestToDTO(userPostRequest));
+			userService.registerUser(convertPostRequestToDTO(userPostRequest));
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (UserNotCreatedException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
@@ -59,9 +61,9 @@ public class UserController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotFoundException {
+	public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
 		try {
-			userService.loginUser(convertRequestToDTO(userPostRequest));
+			userService.loginUser(convertLoginRequestToDTO(userLoginRequest));
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (UserNotFoundException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
@@ -70,9 +72,9 @@ public class UserController {
 	}
 	
 	@PutMapping("/changePassword")
-	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotFoundException,UserNotModifiedException {
+	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPutRequest userPutRequest) throws UserNotFoundException,UserNotModifiedException {
 		try {
-			userService.changePassword(convertRequestToDTO(userPostRequest));
+			userService.changePassword(convertPutRequestToDTO(userPutRequest));
 			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 		} catch (UserNotFoundException | UserNotModifiedException e) {
 			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
@@ -82,20 +84,34 @@ public class UserController {
 
 	
 	
-	private UserDTO convertRequestToDTO(UserPostRequest userPostRequest) {
-		UserDTO userDTO = new UserDTO(
+	private UserDTO convertPostRequestToDTO(UserPostRequest userPostRequest) {
+		return new UserDTO(
 				userPostRequest.getId(),
 				userPostRequest.getName(),
 				userPostRequest.getSurname(),
 				userPostRequest.getLogin(),
 				userPostRequest.getEmail(),
-				userPostRequest.getPassword());
-		if (userPostRequest.getOldPassword() != null) {
-			userDTO.setOldPassword(userPostRequest.getOldPassword());
-		}
-		return userDTO;
+				userPostRequest.getPassword()
+				);
 	}
 	
+	private UserDTO convertLoginRequestToDTO(UserLoginRequest userLoginRequest) {
+		return new UserDTO(
+				userLoginRequest.getLogin(),
+				userLoginRequest.getPassword()
+				);
+	}
+	
+	private UserDTO convertPutRequestToDTO(UserPutRequest userPutRequest) {
+		return new UserDTO(
+				userPutRequest.getLogin(),
+				userPutRequest.getPassword(),
+				userPutRequest.getOldPassword()
+				);
+	}
+
+
+
 	private UserGetResponse convertDTOtoResponse(UserDTO userDTO) {
 		return new UserGetResponse(
 				userDTO.getId(),
