@@ -43,8 +43,7 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
 	}
 
 	@Override
-	public Integer deleteFavorite(Integer id_user, Integer id_song) throws FavoriteNotDeletedException {
-		// TODO Auto-generated method stub
+	public Integer deleteFavorite(Integer id_song, Integer id_user) throws FavoriteNotDeletedException {
 		try {
 			return jdbcTemplate.update("Delete from favorite where id_user = ? and id_song = ?", id_user, id_song);			
 		}

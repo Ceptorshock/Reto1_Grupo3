@@ -26,9 +26,10 @@ public class FavoriteController {
 	
 	
 	@DeleteMapping("/fav/{id_user}/{id_song}")
-	public ResponseEntity<Integer> deleteFavorite(@PathVariable("id_user") Integer id_user, @PathVariable("id_song") Integer id_song) throws FavoriteNotDeletedException {
+	public ResponseEntity<Integer> deleteFavorite(@PathVariable("id_user") Integer id_song, @PathVariable("id_song") Integer id_user) throws FavoriteNotDeletedException {
+		System.out.println(id_song + " "  + id_user);
 		try {
-			return new ResponseEntity<>(favoriteService.deleteFavorite(id_user, id_song), HttpStatus.OK);
+			return new ResponseEntity<>(favoriteService.deleteFavorite(id_song, id_user), HttpStatus.OK);
 		} catch (FavoriteNotDeletedException e) {
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);
 		}
