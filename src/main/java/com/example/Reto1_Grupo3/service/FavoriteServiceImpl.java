@@ -20,8 +20,8 @@ public class FavoriteServiceImpl implements FavoriteService{
 	FavoriteRepository favoriteRepository;
 
 	@Override
-	public Integer deleteFavorite(Integer id) throws FavoriteNotDeletedException {
-		return favoriteRepository.deleteFavorite(id); 
+	public Integer deleteFavorite(Integer id_user, Integer id_song) throws FavoriteNotDeletedException {
+		return favoriteRepository.deleteFavorite(id_user, id_song); 
 	}
 
 	@Override

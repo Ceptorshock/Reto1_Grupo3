@@ -35,20 +35,16 @@ public class SongController {
 	SongService songService;
 
 	@GetMapping("/fav/{id}")
-
-
-
 	public ResponseEntity<List<SongGetResponse>> getAllFavorites(@PathVariable("id") Integer id )throws SongNotFoundException{	
 		try {
-		System.out.println("aa");
 
-		List<SongDTO> list = songService.findAllFavorite(id);
-		List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
-		for (SongDTO songDTO : list) {
-			listPostRequest.add(convertDTOtoResponse(songDTO));
-		}
-	
-		return new ResponseEntity<>(listPostRequest,HttpStatus.ACCEPTED);
+			List<SongDTO> list = songService.findAllFavorite(id);
+			List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
+			for (SongDTO songDTO : list) {
+				listPostRequest.add(convertDTOtoResponse(songDTO));
+			}
+			
+			return new ResponseEntity<>(listPostRequest,HttpStatus.ACCEPTED);
 		
 		}catch(SongNotFoundException e) {
 		
@@ -59,15 +55,15 @@ public class SongController {
 	@GetMapping("/songs")
 	public ResponseEntity<List<SongGetResponse>> getSongs() throws SongEmptyListException{
 		try {
-		List<SongDTO> listSongsDAO = songService.findAll();
-		List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
-
-		for(SongDTO songDTO: listSongsDAO ) {
-
-			listSongsGetREsponse.add(convertDTOtoResponse(songDTO));
-		}
-		
-		return new ResponseEntity<>(listSongsGetREsponse, HttpStatus.ACCEPTED);
+			List<SongDTO> listSongsDAO = songService.findAll();
+			List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
+	
+			for(SongDTO songDTO: listSongsDAO ) {
+	
+				listSongsGetREsponse.add(convertDTOtoResponse(songDTO));
+			}
+			
+			return new ResponseEntity<>(listSongsGetREsponse, HttpStatus.ACCEPTED);
 		}catch (SongEmptyListException e){
 		
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);

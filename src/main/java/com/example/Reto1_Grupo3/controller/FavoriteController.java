@@ -7,6 +7,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
@@ -17,16 +18,17 @@ import com.example.Reto1_Grupo3.service.FavoriteService;
 
 import jakarta.validation.Valid;
 @RestController
+@RequestMapping("api")
 public class FavoriteController {
 	
 	@Autowired
 	FavoriteService favoriteService;
 	
 	
-	@DeleteMapping("/fav/{id}")
-	public ResponseEntity<Integer> deleteFavorite(@PathVariable("id") Integer id) throws FavoriteNotDeletedException {
+	@DeleteMapping("/fav/{id_user}/{id_song}")
+	public ResponseEntity<Integer> deleteFavorite(@PathVariable("id_user") Integer id_user, @PathVariable("id_song") Integer id_song) throws FavoriteNotDeletedException {
 		try {
-			return new ResponseEntity<>(favoriteService.deleteFavorite(id), HttpStatus.OK);
+			return new ResponseEntity<>(favoriteService.deleteFavorite(id_user, id_song), HttpStatus.OK);
 		} catch (FavoriteNotDeletedException e) {
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);
 		}

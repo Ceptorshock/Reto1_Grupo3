@@ -8,6 +8,6 @@ import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
 public interface FavoriteRepository {
 
 	Integer addFavorite(FavoritePostRequest favorite) throws FavoriteNotCreatedException;
-	Integer deleteFavorite(Integer id) throws FavoriteNotDeletedException;
+	Integer deleteFavorite(Integer id_user, Integer id_song) throws FavoriteNotDeletedException;
 	
 }
