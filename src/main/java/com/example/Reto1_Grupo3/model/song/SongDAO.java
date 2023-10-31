@@ -5,19 +5,29 @@ public class SongDAO {
 	private String url;
 	private String title;
 	private String author;
-	
+	private boolean favorite;
 	
 	public SongDAO() {
-		
 	}
 
 
-	public SongDAO(int id, String url, String title, String author) {
+	public SongDAO(int id, String url, String title, String author, boolean favorite) {
 		super();
 		this.id = id;
 		this.url = url;
 		this.title = title;
 		this.author = author;
+		this.favorite = favorite;
+	}
+
+
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
 	}
 
 
@@ -63,8 +73,11 @@ public class SongDAO {
 
 	@Override
 	public String toString() {
-		return "SongDAO [id=" + id + ", url=" + url + ", title=" + title + ", author=" + author + "]";
+		return "SongDAO [id=" + id + ", url=" + url + ", title=" + title + ", author=" + author + ", favorite="
+				+ favorite + "]";
 	}
+
+
 
 
 	

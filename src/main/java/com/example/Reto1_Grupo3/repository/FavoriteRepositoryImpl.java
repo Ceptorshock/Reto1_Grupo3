@@ -30,6 +30,7 @@ public class FavoriteRepositoryImpl implements FavoriteRepository{
 
 	@Override
 	public Integer addFavorite(FavoritePostRequest favorite) throws FavoriteNotCreatedException {
+		System.out.println(favorite.toString());
 		try {
 			return jdbcTemplate.update("insert into favorite (id_song, id_user) Values (?,?)", 
 					new Object[] {

@@ -52,10 +52,10 @@ public class SongController {
 		}
 	}
 
-	@GetMapping("/songs")
-	public ResponseEntity<List<SongGetResponse>> getSongs() throws SongEmptyListException{
+	@GetMapping("/songs/{id_user}")
+	public ResponseEntity<List<SongGetResponse>> getSongs(@PathVariable("id_user") Integer id_user) throws SongEmptyListException{
 		try {
-			List<SongDTO> listSongsDAO = songService.findAll();
+			List<SongDTO> listSongsDAO = songService.findAll(id_user);
 			List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
 	
 			for(SongDTO songDTO: listSongsDAO ) {
@@ -71,8 +71,8 @@ public class SongController {
 
 
 	}
-	@GetMapping("/songs/{id}")
-	public ResponseEntity<List<SongGetResponse>> getSongById(@PathVariable("id") int id)throws SongNotFoundException{
+	@GetMapping("/songs/{id_user}/{id_song}")
+	public ResponseEntity<List<SongGetResponse>> getSongById(@PathVariable("id_user") int id)throws SongNotFoundException{
 		List<SongDTO> listSongsDAO = songService.findSongById(id);
 		List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
 
@@ -126,7 +126,10 @@ public class SongController {
 				songPostRequest.getId(),
 				songPostRequest.getUrl(),
 				songPostRequest.getTitle(),
-				songPostRequest.getAuthor());
+				songPostRequest.getAuthor(),
+				songPostRequest.isFavorite()
+				
+				);
 		return songDTO;
 	}
 	private SongGetResponse convertDTOtoResponse(SongDTO songDTO) {
@@ -134,6 +137,8 @@ public class SongController {
 				songDTO.getId(),
 				songDTO.getUrl(),
 				songDTO.getTitle(),
-				songDTO.getAuthor());
+				songDTO.getAuthor(),
+				songDTO.isFavorite()				
+				);
 	}
 }

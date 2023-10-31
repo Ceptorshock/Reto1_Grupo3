@@ -10,7 +10,7 @@ import com.example.Reto1_Grupo3.model.song.SongDTO;
 
 public interface SongService {
 	
-	List<SongDTO> findAll() throws SongEmptyListException;
+	List<SongDTO> findAll(int id_user) throws SongEmptyListException;
 
 	List<SongDTO> findSongById(int id) throws SongNotFoundException;
 

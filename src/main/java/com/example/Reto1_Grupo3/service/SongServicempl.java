@@ -23,8 +23,9 @@ public class SongServicempl implements SongService{
 	SongRepository songRepository;
 	
 	@Override
-	public List<SongDTO> findAll() throws SongEmptyListException{
-		List<SongDAO> listSongsDAO=songRepository.findAll();
+	public List<SongDTO> findAll(int id_user) throws SongEmptyListException{
+		List<SongDAO> listSongsDAO=songRepository.findAll(id_user);
+		System.out.println(listSongsDAO);
 		List<SongDTO> listSongsDTO = new ArrayList<SongDTO>();
 	
 		for(SongDAO songDAO:listSongsDAO) {
@@ -83,14 +84,17 @@ public class SongServicempl implements SongService{
 				songDAO.getId(),
 				songDAO.getUrl(),
 				songDAO.getTitle(),
-				songDAO.getAuthor());
-				}
+				songDAO.getAuthor(),
+				songDAO.isFavorite()
+				);
+		}
 	private SongDAO convertDTOtoDAO(SongDTO songDTO) {
 		return new SongDAO(
 				songDTO.getId(),
 				songDTO.getUrl(),
 				songDTO.getTitle(),
-				songDTO.getAuthor()
+				songDTO.getAuthor(),
+				songDTO.isFavorite()
 				);	
 	}
 

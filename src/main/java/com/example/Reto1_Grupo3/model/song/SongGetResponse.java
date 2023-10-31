@@ -5,6 +5,7 @@ public class SongGetResponse {
 	private String url;
 	private String title;
 	private String author;
+	private boolean favorite;
 	
 	
 	public SongGetResponse() {
@@ -12,12 +13,13 @@ public class SongGetResponse {
 	}
 
 
-	public SongGetResponse(int id, String url, String title, String author) {
+	public SongGetResponse(int id, String url, String title, String author, boolean favorite) {
 		super();
 		this.id = id;
 		this.url = url;
 		this.title = title;
 		this.author = author;
+		this.favorite = favorite;
 	}
 
 
@@ -33,6 +35,16 @@ public class SongGetResponse {
 
 	public String getUrl() {
 		return url;
+	}
+
+
+	public boolean isFavorite() {
+		return favorite;
+	}
+
+
+	public void setFavorite(boolean favorite) {
+		this.favorite = favorite;
 	}
 
 
@@ -63,7 +75,9 @@ public class SongGetResponse {
 
 	@Override
 	public String toString() {
-		return "SongGetResponse [id=" + id + ", url=" + url + ", title=" + title + ", author=" + author + "]";
+		return "SongGetResponse [id=" + id + ", url=" + url + ", title=" + title + ", author=" + author + ", favorite="
+				+ favorite + "]";
 	}
-	
+
+
 }

@@ -38,6 +38,7 @@ public class FavoriteController {
 	
 	@PostMapping("/fav")
 	public ResponseEntity<Integer> createFavorite(@Valid @RequestBody FavoritePostRequest favorite)  throws FavoriteNotDeletedException {
+		System.out.println(favorite.toString());
 		try {
 			return new ResponseEntity<Integer>(favoriteService.addFavorite(favorite), HttpStatus.CREATED);
 		} catch (FavoriteNotCreatedException e) {
