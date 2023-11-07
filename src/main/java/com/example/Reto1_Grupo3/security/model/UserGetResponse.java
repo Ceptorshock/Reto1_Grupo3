@@ -1,4 +1,4 @@
-package com.example.Reto1_Grupo3.model.user;
+package com.example.Reto1_Grupo3.security.model;
 
 public class UserGetResponse {
 

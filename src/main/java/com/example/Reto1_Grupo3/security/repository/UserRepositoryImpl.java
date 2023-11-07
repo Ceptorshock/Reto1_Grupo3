@@ -1,6 +1,7 @@
-package com.example.Reto1_Grupo3.repository;
+package com.example.Reto1_Grupo3.security.repository;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
@@ -11,11 +12,11 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
-import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
-import com.example.Reto1_Grupo3.exceptions.users.UserNotFoundException;
-import com.example.Reto1_Grupo3.exceptions.users.UserNotModifiedException;
-import com.example.Reto1_Grupo3.model.user.UserDAO;
+import com.example.Reto1_Grupo3.security.exceptions.UserEmptyListException;
+import com.example.Reto1_Grupo3.security.exceptions.UserNotCreatedException;
+import com.example.Reto1_Grupo3.security.exceptions.UserNotFoundException;
+import com.example.Reto1_Grupo3.security.exceptions.UserNotModifiedException;
+import com.example.Reto1_Grupo3.security.model.UserDAO;
 
 @Repository
 public class UserRepositoryImpl implements UserRepository {
@@ -60,15 +61,31 @@ public class UserRepositoryImpl implements UserRepository {
 	}
 	
 	
-	public UserDAO findByLogin(String login) throws UserNotFoundException {
+//	public UserDAO findByLogin(String login) throws UserNotFoundException {
+//		try {
+//			return jdbcTemplate.queryForObject(
+//					"SELECT * FROM users WHERE login = ?",
+//					BeanPropertyRowMapper.newInstance(UserDAO.class),
+//					login);
+//		} catch (EmptyResultDataAccessException e) {
+//			throw new UserNotFoundException("User Not Found in Repository");
+//		}		
+//	}
+	
+	public Optional<UserDAO> findByLogin(String login) {
 		try {
-			return jdbcTemplate.queryForObject(
+			System.out.println("Repository - Login: " + login);
+			UserDAO userDAO = jdbcTemplate.queryForObject(
 					"SELECT * FROM users WHERE login = ?",
 					BeanPropertyRowMapper.newInstance(UserDAO.class),
 					login);
-		} catch (EmptyResultDataAccessException e) {
-			throw new UserNotFoundException("User Not Found in Repository");
-		}		
+			System.out.println("Respository - userDAO: " + userDAO.getLogin() + " " + userDAO.getPassword());
+			return Optional.of(userDAO);
+		} catch (EmptyResultDataAccessException e){
+			e.printStackTrace();
+			return Optional.empty();
+		}
+
 	}
 	
 	public int changePassword(UserDAO userDAO) throws UserNotModifiedException {

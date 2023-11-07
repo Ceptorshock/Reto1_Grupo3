@@ -1,10 +1,10 @@
-package com.example.Reto1_Grupo3.model.user;
+package com.example.Reto1_Grupo3.security.model;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.NotNull;
 
-public class UserLoginRequest {
+public class UserPutRequest {
 	
 	@NotNull
 	@NotBlank
@@ -14,20 +14,25 @@ public class UserLoginRequest {
 	@NotBlank
 	@NotEmpty
 	private String password;
+	@NotNull
+	@NotBlank
+	@NotEmpty
+	private String oldPassword;
 	
 	
 	//Constructors
 	
-	public UserLoginRequest() {}
+	public UserPutRequest() {}
+
 	
-	public UserLoginRequest(@NotNull @NotBlank @NotEmpty String login,
-			@NotNull @NotBlank @NotEmpty String password) {
+	public UserPutRequest(@NotNull @NotBlank @NotEmpty String login,
+			@NotNull @NotBlank @NotEmpty String password,
+			@NotNull @NotBlank @NotEmpty String oldPassword) {
 		super();
 		this.login = login;
 		this.password = password;
+		this.oldPassword = oldPassword;
 	}
-	
-	
 	
 	//Getters and Setters
 	
@@ -45,15 +50,21 @@ public class UserLoginRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-
-	
-	//ToString
-	@Override
-	public String toString() {
-		return "UserLoginRequest [login=" + login + ", password=" + password + "]";
+	public String getOldPassword() {
+		return oldPassword;
 	}
 
+	public void setOldPassword(String oldPassword) {
+		this.oldPassword = oldPassword;
+	}
+
+	//ToString
 	
+	@Override
+	public String toString() {
+		return "UserPutRequest [login=" + login + ", password=" + password + ", oldPassword=" + oldPassword + "]";
+	}
+
 	
 	
 

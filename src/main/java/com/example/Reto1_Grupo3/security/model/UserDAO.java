@@ -1,7 +1,16 @@
-package com.example.Reto1_Grupo3.model.user;
+package com.example.Reto1_Grupo3.security.model;
 
-public class UserDAO {
+import java.util.Collection;
 
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.userdetails.UserDetails;
+
+public class UserDAO implements UserDetails {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private int id;
 	private String name;
 	private String surname;
@@ -62,9 +71,11 @@ public class UserDAO {
 	public String getEmail() {
 		return email;
 	}
+	
 	public void setEmail(String email) {
 		this.email = email;
 	}
+	@Override
 	public String getPassword() {
 		return password;
 	}
@@ -78,6 +89,42 @@ public class UserDAO {
 	public String toString() {
 		return "UserDAO [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email=" + email
 				+ ", password=" + password + "]";
+	}
+
+	@Override
+	public Collection<? extends GrantedAuthority> getAuthorities() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public String getUsername() {
+		// TODO Auto-generated method stub
+		return login;
+	}
+
+	@Override
+	public boolean isAccountNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isAccountNonLocked() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isCredentialsNonExpired() {
+		// TODO Auto-generated method stub
+		return true;
+	}
+
+	@Override
+	public boolean isEnabled() {
+		// TODO Auto-generated method stub
+		return true;
 	}
 	
 	

@@ -1,4 +1,4 @@
-package com.example.Reto1_Grupo3.model.user;
+package com.example.Reto1_Grupo3.security.model;
 
 import jakarta.validation.constraints.Email;
 import jakarta.validation.constraints.NotBlank;
@@ -29,31 +29,11 @@ public class UserPostRequest {
 	@NotBlank
 	@NotEmpty
 	private String password;
-	@NotNull
-	@NotBlank
-	@NotEmpty
-	private String oldPassword;
 	
 	
 	//Constructors
 	
 	public UserPostRequest() {}
-	
-	public UserPostRequest(@NotNull @NotBlank @NotEmpty String login,
-			@NotNull @NotBlank @NotEmpty String password) {
-		super();
-		this.login = login;
-		this.password = password;
-	}
-	
-	public UserPostRequest(@NotNull @NotBlank @NotEmpty String login,
-			@NotNull @NotBlank @NotEmpty String password,
-			@NotNull @NotBlank @NotEmpty String oldPassword) {
-		super();
-		this.login = login;
-		this.password = password;
-		this.oldPassword = oldPassword;
-	}
 	
 	public UserPostRequest(int id,
 			@NotNull @NotBlank @NotEmpty String name,
@@ -68,23 +48,6 @@ public class UserPostRequest {
 		this.login = login;
 		this.email = email;
 		this.password = password;
-	}
-	
-	public UserPostRequest(int id, 
-			@NotNull @NotBlank @NotEmpty String name,
-			@NotNull @NotBlank @NotEmpty String surname,
-			@NotNull @NotBlank @NotEmpty String login,
-			@NotNull @NotBlank @NotEmpty @Email String email,
-			@NotNull @NotBlank @NotEmpty String password,
-			@NotNull @NotBlank @NotEmpty String oldPassword) {
-		super();
-		this.id = id;
-		this.name = name;
-		this.surname = surname;
-		this.login = login;
-		this.email = email;
-		this.password = password;
-		this.oldPassword = oldPassword;
 	}
 	
 	//Getters and Setters
@@ -128,20 +91,13 @@ public class UserPostRequest {
 	public void setPassword(String password) {
 		this.password = password;
 	}
-	public String getOldPassword() {
-		return oldPassword;
-	}
-
-	public void setOldPassword(String oldPassword) {
-		this.oldPassword = oldPassword;
-	}
 
 	//ToString
 	
 	@Override
 	public String toString() {
 		return "UserPostRequest [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email="
-				+ email + ", password=" + password + ", oldPassword=" + oldPassword + "]";
+				+ email + ", password=" + password + "]";
 	}
 
 	

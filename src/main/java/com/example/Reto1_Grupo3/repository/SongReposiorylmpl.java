@@ -11,12 +11,7 @@ import org.springframework.stereotype.Repository;
 import com.example.Reto1_Grupo3.exceptions.song.SongEmptyListException;
 import com.example.Reto1_Grupo3.exceptions.song.SongNotCreatedException;
 import com.example.Reto1_Grupo3.exceptions.song.SongNotFoundException;
-import com.example.Reto1_Grupo3.exceptions.users.UserEmptyListException;
-import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.song.SongDAO;
-import com.example.Reto1_Grupo3.model.song.SongDTO;
-import com.example.Reto1_Grupo3.model.song.SongGetResponse;
-import com.example.Reto1_Grupo3.model.song.SongPostRequest;
 @Repository
 public class SongReposiorylmpl implements SongRepository{
 

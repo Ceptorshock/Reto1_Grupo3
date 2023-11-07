@@ -1,23 +1,14 @@
 package com.example.Reto1_Grupo3.repository;
 
-import java.sql.SQLIntegrityConstraintViolationException;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.dao.DuplicateKeyException;
-import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.dao.IncorrectResultSizeDataAccessException;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
 import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotCreatedException;
 import com.example.Reto1_Grupo3.exceptions.favourites.FavoriteNotDeletedException;
-import com.example.Reto1_Grupo3.exceptions.users.UserNotCreatedException;
-import com.example.Reto1_Grupo3.model.favorite.FavoriteDAO;
 import com.example.Reto1_Grupo3.model.favorite.FavoritePostRequest;
-import com.example.Reto1_Grupo3.service.FavoriteService;
 
 
 

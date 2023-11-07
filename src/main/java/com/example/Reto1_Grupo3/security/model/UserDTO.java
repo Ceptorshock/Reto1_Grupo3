@@ -1,4 +1,4 @@
-package com.example.Reto1_Grupo3.model.user;
+package com.example.Reto1_Grupo3.security.model;
 
 public class UserDTO {
 
@@ -8,7 +8,7 @@ public class UserDTO {
 	private String login;
 	private String email;
 	private String password;
-	private String oldPassword;
+	private String oldPassword; 
 	
 	
 	//Constructors
@@ -95,6 +95,7 @@ public class UserDTO {
 		return "UserDTO [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email=" + email
 				+ ", password=" + password + ", oldPassword=" + oldPassword + "]";
 	}
+
 	
 	
 
