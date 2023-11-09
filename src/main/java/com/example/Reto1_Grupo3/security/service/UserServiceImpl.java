@@ -11,6 +11,7 @@ import org.springframework.stereotype.Service;
 
 import com.example.Reto1_Grupo3.security.exceptions.UserEmptyListException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotCreatedException;
+import com.example.Reto1_Grupo3.security.exceptions.UserNotFoundException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotModifiedException;
 import com.example.Reto1_Grupo3.security.model.UserDAO;
 import com.example.Reto1_Grupo3.security.model.UserDTO;
@@ -50,6 +51,16 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 	@Override
 	public int changePassword(UserDAO userDAO) throws UserNotModifiedException {
 		return userRepository.changePassword(userDAO);
+	}
+	
+	@Override
+	public UserDTO checkEmail(String email) throws UserNotFoundException {
+		return convertDAOtoDTO(userRepository.checkIfEmailExists(email));
+	}
+	@Override
+	public UserDTO checkLogin(String login) throws UserNotFoundException {
+		System.out.println("Service - userDAO: " + login);
+		return convertDAOtoDTO(userRepository.checkIfLoginExists(login));
 	}
 
 //	private UserDAO converDTOtoDAOchangePassword(UserDTO userDTO) {

@@ -16,5 +16,7 @@ public interface UserRepository {
 	UserDAO findByEmail(String email) throws UserNotFoundException;
 	Optional<UserDAO> findByLogin(String login);
 	int changePassword(UserDAO userDAO) throws UserNotModifiedException;
+	UserDAO checkIfEmailExists(String email) throws UserNotFoundException;
+	UserDAO checkIfLoginExists(String login) throws UserNotFoundException;
 	
 }

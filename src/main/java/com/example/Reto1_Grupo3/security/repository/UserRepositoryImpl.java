@@ -99,7 +99,28 @@ public class UserRepositoryImpl implements UserRepository {
 		}
 		
 	}
-
 	
+	public UserDAO checkIfEmailExists(String email) throws UserNotFoundException {
+		try {
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM users WHERE email = ?",
+					BeanPropertyRowMapper.newInstance(UserDAO.class),
+					email);
+		} catch (EmptyResultDataAccessException e) {
+			throw new UserNotFoundException("Email not found in Repository");	
+		}		
+	}
+	public UserDAO checkIfLoginExists(String login) throws UserNotFoundException {
+		try {
+			System.out.println("Respository - userDAO: " + login);
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM users WHERE login = ?",
+					BeanPropertyRowMapper.newInstance(UserDAO.class),
+					login);
+		} catch (EmptyResultDataAccessException e) {
+			throw new UserNotFoundException("Login not found in Repository");	
+		}		
+	}
+
 
 }

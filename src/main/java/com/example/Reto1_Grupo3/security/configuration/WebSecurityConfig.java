@@ -62,7 +62,7 @@ public class WebSecurityConfig {
 					
 				// vamos a permitir registro y login para todos. Al no especificar metodo
 				// podran hacer todos los metodos a dichas urls...
-				.requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register").permitAll()	
+				.requestMatchers(HttpMethod.POST, "/api/auth/login", "/api/auth/register", "api/auth/changePassword", "api/auth/checkEmail", "api/auth/checkLogin").permitAll()	
 				
 				// employees
 				// permitimos el get a cualquiera
@@ -75,7 +75,7 @@ public class WebSecurityConfig {
 			// el siguiente bloque de codigo ajusta los codigos de error, para devolver 401 en caso de que tenga que estar autenticado
 			.exceptionHandling((exceptionHandling) ->
 				exceptionHandling.authenticationEntryPoint((request, response, ex) -> {
-					if (response.getStatus() < 400) {
+					if (response.getStatus() < 400 && response.getStatus() != 204) {
 						response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
 					}
 				})

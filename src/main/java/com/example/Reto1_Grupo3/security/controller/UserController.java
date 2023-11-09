@@ -12,6 +12,7 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -24,6 +25,7 @@ import com.example.Reto1_Grupo3.security.exceptions.UserEmptyListException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotCreatedException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotFoundException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotModifiedException;
+import com.example.Reto1_Grupo3.security.model.RegistrationCheckRequest;
 import com.example.Reto1_Grupo3.security.model.UserDAO;
 import com.example.Reto1_Grupo3.security.model.UserDTO;
 import com.example.Reto1_Grupo3.security.model.UserGetResponse;
@@ -111,15 +113,12 @@ public class UserController {
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
 		try {
-			System.out.println("Controller - Login: " + userLoginRequest.getLogin() + " - Password: " + userLoginRequest.getPassword());
 			Authentication authentication = authenticationManager.authenticate(
 					new UsernamePasswordAuthenticationToken(userLoginRequest.getLogin(), userLoginRequest.getPassword())
 			);
-			System.out.println("SI");
 			UserDAO userDAO = (UserDAO) authentication.getPrincipal();
 			String accessToken = jwtUtil.generateAccessToken(userDAO);
-			UserLoginResponse response = new UserLoginResponse(userLoginRequest.getLogin(),accessToken);
-			System.out.println("Controller - Login: " + response.getLogin().toString() + " - Token: " + response.getAccessToken().toString());
+			UserLoginResponse response = new UserLoginResponse(userLoginRequest.getLogin(),accessToken,userDAO.getId());
 			return ResponseEntity.ok().body(response);
 		} catch (BadCredentialsException e) {
 			e.printStackTrace();
@@ -145,8 +144,32 @@ public class UserController {
 		}
 			
 	}
-
 	
+	@PostMapping("/auth/checkEmail")
+	public ResponseEntity<?> checkEmail(@RequestBody UserPostRequest userPostRequest) {
+		try {
+			System.out.println("Controller - Email: " + userPostRequest.getEmail().toString());
+			userService.checkEmail(userPostRequest.getEmail());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (UserNotFoundException e) {
+			//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+		}
+			
+	}
+	
+	@PostMapping("/auth/checkLogin")
+	public ResponseEntity<?> checkLogin(@RequestBody UserPostRequest userPostRequest) {
+		try {
+			System.out.println("Controller - Login: " + userPostRequest.getLogin().toString());
+			userService.checkLogin(userPostRequest.getLogin());
+			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
+		} catch (UserNotFoundException e) {
+			//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
+		}
+			
+	}
 	
 	private UserDTO convertPostRequestToDTO(UserPostRequest userPostRequest) {
 		return new UserDTO(
