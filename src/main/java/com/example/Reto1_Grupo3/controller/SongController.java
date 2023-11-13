@@ -57,8 +57,13 @@ public class SongController {
 	@GetMapping("/songs")
 	public ResponseEntity<List<SongGetResponse>> getSongs(Authentication authentication) throws SongEmptyListException{
 		try {
-			UserDAO userDetails = (UserDAO) authentication.getPrincipal();
-			List<SongDTO> listSongsDAO = songService.findAll(userDetails.getId());
+			List<SongDTO> listSongsDAO = new ArrayList<SongDTO>();
+			if(authentication == null) {
+				listSongsDAO = songService.findAll(0);
+			}else{				
+				UserDAO userDetails = (UserDAO) authentication.getPrincipal();
+				listSongsDAO = songService.findAll(userDetails.getId());
+			}
 			List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
 	
 			for(SongDTO songDTO: listSongsDAO ) {

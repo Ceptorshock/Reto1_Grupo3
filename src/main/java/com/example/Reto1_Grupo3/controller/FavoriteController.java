@@ -38,8 +38,11 @@ public class FavoriteController {
 	}
 	
 	
-	@PostMapping("/fav")
-	public ResponseEntity<Integer> createFavorite(@Valid @RequestBody FavoritePostRequest favorite)  throws FavoriteNotDeletedException {
+	@PostMapping("/fav/{id_song}")
+	public ResponseEntity<Integer> createFavorite(@PathVariable("id_song") Integer id_song, Authentication authentication)  throws FavoriteNotDeletedException {
+		UserDAO userDetails = (UserDAO) authentication.getPrincipal();
+		FavoritePostRequest favorite = new FavoritePostRequest(userDetails.getId(), id_song);
+		System.out.println("adsasd");
 		try {
 			return new ResponseEntity<Integer>(favoriteService.addFavorite(favorite), HttpStatus.CREATED);
 		} catch (FavoriteNotCreatedException e) {

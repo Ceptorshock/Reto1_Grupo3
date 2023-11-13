@@ -18,7 +18,7 @@ public class SongReposiorylmpl implements SongRepository{
 	@Autowired
 	private JdbcTemplate jdbcTemplate;
 	@Override
-	public List<SongDAO> findAll(int id_user) throws SongEmptyListException{
+	public List<SongDAO> findAllWithId(int id_user) throws SongEmptyListException{
 		try {
 			return jdbcTemplate.query(""
 					+ "SELECT \r\n"
@@ -30,6 +30,18 @@ public class SongReposiorylmpl implements SongRepository{
 					+ "FROM songs\r\n"
 					+ "LEFT JOIN favorite ON songs.id = favorite.id_song AND favorite.id_user = ?;", 
 					BeanPropertyRowMapper.newInstance(SongDAO.class), id_user);
+			
+		} catch (IncorrectResultSizeDataAccessException e) {
+			throw new SongEmptyListException("Song list is empty in Repository");
+		}
+		
+	}
+	@Override
+	public List<SongDAO> findAll() throws SongEmptyListException{
+		try {
+			return jdbcTemplate.query(""
+					+ "SELECT * from songs", 
+					BeanPropertyRowMapper.newInstance(SongDAO.class));
 			
 		} catch (IncorrectResultSizeDataAccessException e) {
 			throw new SongEmptyListException("Song list is empty in Repository");

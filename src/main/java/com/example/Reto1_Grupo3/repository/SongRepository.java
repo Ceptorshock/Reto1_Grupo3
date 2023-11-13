@@ -12,7 +12,9 @@ import com.example.Reto1_Grupo3.model.song.SongDAO;
 
 public interface SongRepository {
 
-	List<SongDAO> findAll(int id_user) throws SongEmptyListException;
+	List<SongDAO> findAllWithId(int id_user) throws SongEmptyListException;
+	
+	List<SongDAO> findAll() throws SongEmptyListException;
 	
 	List<SongDAO> findSongById(int id) throws SongNotFoundException;
 	

@@ -24,7 +24,12 @@ public class SongServicempl implements SongService{
 	
 	@Override
 	public List<SongDTO> findAll(int id_user) throws SongEmptyListException{
-		List<SongDAO> listSongsDAO=songRepository.findAll(id_user);
+		List<SongDAO> listSongsDAO = new ArrayList<SongDAO>();
+		if(id_user == 0) {
+			listSongsDAO = songRepository.findAll();
+		}else {
+			listSongsDAO = songRepository.findAllWithId(id_user); 
+		}
 		System.out.println(listSongsDAO);
 		List<SongDTO> listSongsDTO = new ArrayList<SongDTO>();
 	
