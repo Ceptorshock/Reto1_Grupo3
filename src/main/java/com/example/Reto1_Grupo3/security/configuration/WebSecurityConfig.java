@@ -68,6 +68,7 @@ public class WebSecurityConfig {
 				// permitimos el get a cualquiera
 				//.requestMatchers("/api/employees/{id}").permitAll()
 				.requestMatchers(HttpMethod.GET, "/api/users", "/v3/api-docs/**", "/swagger-ui/**", "api/songs","api/songs/**").permitAll()
+
 				
 				// para todo lo demas habra que estar autenticado
 				.anyRequest().authenticated()
@@ -81,6 +82,7 @@ public class WebSecurityConfig {
 				})
  			)
 			.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+		
 			
 
 		return http.build();

@@ -12,7 +12,6 @@ import org.springframework.security.authentication.UsernamePasswordAuthenticatio
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -25,7 +24,6 @@ import com.example.Reto1_Grupo3.security.exceptions.UserEmptyListException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotCreatedException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotFoundException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotModifiedException;
-import com.example.Reto1_Grupo3.security.model.RegistrationCheckRequest;
 import com.example.Reto1_Grupo3.security.model.UserDAO;
 import com.example.Reto1_Grupo3.security.model.UserDTO;
 import com.example.Reto1_Grupo3.security.model.UserGetResponse;
@@ -65,47 +63,20 @@ public class UserController {
 		}
 	}
 	
-	
-//	@PostMapping("/register")
-//	public ResponseEntity<?> register(@Valid @RequestBody UserPostRequest userPostRequest) throws UserNotCreatedException {
-//		try {
-//			userService.registerUser(convertPostRequestToDTO(userPostRequest));
-//			return new ResponseEntity<>(HttpStatus.CREATED);
-//		} catch (UserNotCreatedException e) {
-//			throw new ResponseStatusException(HttpStatus.BAD_REQUEST,e.getMessage(),e);
-//		}
-//	}
-	
 	@PostMapping("/auth/register")
 	public ResponseEntity<?> signIn(@RequestBody @Valid UserPostRequest userPostRequest) throws UserNotCreatedException {
-		// TODO solo esta creado en el caso de que funcione. Si no es posible que de 500 o 401.
-		// aqui hacer lo que sea preciso
-
-		// vamos a cifrar la contrasenia aqui, ya que no queremos andar dando vueltas con la contraseña sin encriptar si no es preciso
+		
 		BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 		String password = passwordEncoder.encode(userPostRequest.getPassword());
 		
-		// creamos el usuario en DB
 		userPostRequest.setPassword(password);
-		//UserDTO userDTO = new UserDTO(userPostRequest.getLogin(), password);
 		return new ResponseEntity<Integer>(userService.registerUser(convertPostRequestToDTO(userPostRequest)), HttpStatus.CREATED);
 	}
 	
 	
-	// utilizamos el /me por que vamos a coger el nuestro, el que estamos logueado...
 	@GetMapping("/auth/me")
 	public ResponseEntity<?> getUserInfo(Authentication authentication) {
-		// aqui podemos castearlo a UserDetails o User. El UserDetails es una interfaz, 
-		// si lo casteamos a la interfaz no podremos sacar campos como la ID del usuario
 		UserDAO userDetails = (UserDAO) authentication.getPrincipal();
-		
-		// IMPORTANTE: por lo tanto, la ID del usuario no tiene que ir como parametro en la peticion del usuario
-		
-		// aqui podriamos devolver datos del usuario. quizá no sea lo que queremos devolver o no lo querramos devolver
-		// es un ejemplo por que con userDetails.getId() tendríamos la ID del usuario sin que la pase por parametro
-		// necesario en algunos servicios: si quiero devolver una lista o elemento privado del usuario, no voy a querer
-		// que el usuario mande su ID por parametro. Ya que es trampeable.
-		// de ahi que sea "/me" en el ejemplo 
 		
 		return ResponseEntity.ok().body(userDetails);
 	}
@@ -152,7 +123,6 @@ public class UserController {
 			userService.checkEmail(userPostRequest.getEmail());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (UserNotFoundException e) {
-			//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
 		}
 			
@@ -165,7 +135,6 @@ public class UserController {
 			userService.checkLogin(userPostRequest.getLogin());
 			return new ResponseEntity<>(HttpStatus.BAD_REQUEST);
 		} catch (UserNotFoundException e) {
-			//return new ResponseEntity<>(HttpStatus.NO_CONTENT);
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT);
 		}
 			
@@ -181,21 +150,6 @@ public class UserController {
 				userPostRequest.getPassword()
 				);
 	}
-	
-//	private UserDTO convertLoginRequestToDTO(UserLoginRequest userLoginRequest) {
-//		return new UserDTO(
-//				userLoginRequest.getLogin(),
-//				userLoginRequest.getPassword()
-//				);
-//	}
-//	
-//	private UserDTO convertPutRequestToDTO(UserPutRequest userPutRequest) {
-//		return new UserDTO(
-//				userPutRequest.getLogin(),
-//				userPutRequest.getPassword(),
-//				userPutRequest.getOldPassword()
-//				);
-//	}
 
 
 
