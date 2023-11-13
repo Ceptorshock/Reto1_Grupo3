@@ -67,7 +67,7 @@ public class WebSecurityConfig {
 				// employees
 				// permitimos el get a cualquiera
 				//.requestMatchers("/api/employees/{id}").permitAll()
-				.requestMatchers(HttpMethod.GET, "/api/users").permitAll()
+				.requestMatchers(HttpMethod.GET, "/api/users", "/v3/api-docs").permitAll()
 				
 				// para todo lo demas habra que estar autenticado
 				.anyRequest().authenticated()
@@ -81,6 +81,7 @@ public class WebSecurityConfig {
 				})
  			)
 			.addFilterBefore(jwtTokenFilter, UsernamePasswordAuthenticationFilter.class);
+		
 			
 
 		return http.build();

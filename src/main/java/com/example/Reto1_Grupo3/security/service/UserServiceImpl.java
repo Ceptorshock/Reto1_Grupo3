@@ -62,13 +62,6 @@ public class UserServiceImpl implements UserService, UserDetailsService {
 		System.out.println("Service - userDAO: " + login);
 		return convertDAOtoDTO(userRepository.checkIfLoginExists(login));
 	}
-
-//	private UserDAO converDTOtoDAOchangePassword(UserDTO userDTO) {
-//		return new UserDAO(
-//				userDTO.getLogin(),
-//				userDTO.getPassword()
-//				);
-//	}
 	
 	private UserDTO convertDAOtoDTO(UserDAO userDAO) {
 		return new UserDTO(
