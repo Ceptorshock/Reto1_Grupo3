@@ -6,6 +6,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -23,6 +24,7 @@ import com.example.Reto1_Grupo3.exceptions.song.SongNotFoundException;
 import com.example.Reto1_Grupo3.model.song.SongDTO;
 import com.example.Reto1_Grupo3.model.song.SongGetResponse;
 import com.example.Reto1_Grupo3.model.song.SongPostRequest;
+import com.example.Reto1_Grupo3.security.model.UserDAO;
 import com.example.Reto1_Grupo3.service.SongService;
 
 import jakarta.validation.Valid;
@@ -34,11 +36,11 @@ public class SongController {
 	@Autowired
 	SongService songService;
 
-	@GetMapping("/fav/{id}")
-	public ResponseEntity<List<SongGetResponse>> getAllFavorites(@PathVariable("id") Integer id )throws SongNotFoundException{	
+	@GetMapping("/fav")
+	public ResponseEntity<List<SongGetResponse>> getAllFavorites(Authentication authentication)throws SongNotFoundException{	
 		try {
-
-			List<SongDTO> list = songService.findAllFavorite(id);
+			UserDAO userDetails = (UserDAO) authentication.getPrincipal();
+			List<SongDTO> list = songService.findAllFavorite(userDetails.getId());
 			List<SongGetResponse> listPostRequest = new ArrayList<SongGetResponse>();
 			for (SongDTO songDTO : list) {
 				listPostRequest.add(convertDTOtoResponse(songDTO));
@@ -52,10 +54,11 @@ public class SongController {
 		}
 	}
 
-	@GetMapping("/songs/{id_user}")
-	public ResponseEntity<List<SongGetResponse>> getSongs(@PathVariable("id_user") Integer id_user) throws SongEmptyListException{
+	@GetMapping("/songs")
+	public ResponseEntity<List<SongGetResponse>> getSongs(Authentication authentication) throws SongEmptyListException{
 		try {
-			List<SongDTO> listSongsDAO = songService.findAll(id_user);
+			UserDAO userDetails = (UserDAO) authentication.getPrincipal();
+			List<SongDTO> listSongsDAO = songService.findAll(userDetails.getId());
 			List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
 	
 			for(SongDTO songDTO: listSongsDAO ) {
@@ -71,8 +74,8 @@ public class SongController {
 
 
 	}
-	@GetMapping("/songs/{id_user}/{id_song}")
-	public ResponseEntity<List<SongGetResponse>> getSongById(@PathVariable("id_user") int id)throws SongNotFoundException{
+	@GetMapping("/songs/{id_song}")
+	public ResponseEntity<List<SongGetResponse>> getSongById(@PathVariable("id_song") int id)throws SongNotFoundException{
 		List<SongDTO> listSongsDAO = songService.findSongById(id);
 		List<SongGetResponse> listSongsGetREsponse= new ArrayList<SongGetResponse>();
 
