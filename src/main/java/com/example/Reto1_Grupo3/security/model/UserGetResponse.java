@@ -7,22 +7,18 @@ public class UserGetResponse {
 	private String surname;
 	private String login;
 	private String email;
-	//-----------------------------
-	private String password;
-	// Quitar de aqui el password para que no haya manera de que salga de base de datos?//
 	
 	//Constructors
 	
 	public UserGetResponse() {}
 	
-	public UserGetResponse(int id, String name, String surname, String login, String email, String password) {
+	public UserGetResponse(int id, String name, String surname, String login, String email) {
 		super();
 		this.id = id;
 		this.name = name;
 		this.surname = surname;
 		this.login = login;
 		this.email = email;
-		this.password = password;
 	}
 	
 	//Getters and Setters
@@ -60,19 +56,14 @@ public class UserGetResponse {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
-	}
+
 	
 	//ToString
 
 	@Override
 	public String toString() {
 		return "UserGetResponse [id=" + id + ", name=" + name + ", surname=" + surname + ", login=" + login + ", email="
-				+ email + ", password=" + password + "]";
+				+ email + "]";
 	}
 	
 	

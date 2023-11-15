@@ -99,11 +99,8 @@ public class UserController {
 	}
 	
 	@PutMapping("/auth/changePassword")
-	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPutRequest userPutRequest) throws UserNotFoundException,UserNotModifiedException {
+	public ResponseEntity<?> changePassword(@Valid @RequestBody UserPutRequest userPutRequest,Authentication authentication) throws UserNotFoundException,UserNotModifiedException {
 		try {
-			Authentication authentication = authenticationManager.authenticate(
-					new UsernamePasswordAuthenticationToken(userPutRequest.getLogin(), userPutRequest.getOldPassword())
-			);
 			UserDAO userDAO = (UserDAO) authentication.getPrincipal();
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
 			userDAO.setPassword(passwordEncoder.encode(userPutRequest.getPassword()));
@@ -159,8 +156,7 @@ public class UserController {
 				userDTO.getName(),
 				userDTO.getSurname(),
 				userDTO.getLogin(),
-				userDTO.getEmail(),
-				userDTO.getPassword()
+				userDTO.getEmail()
 				);	
 	}
 

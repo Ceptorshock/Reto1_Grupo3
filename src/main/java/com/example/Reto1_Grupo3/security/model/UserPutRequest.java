@@ -9,10 +9,6 @@ public class UserPutRequest {
 	@NotNull
 	@NotBlank
 	@NotEmpty
-	private String login;
-	@NotNull
-	@NotBlank
-	@NotEmpty
 	private String password;
 	@NotNull
 	@NotBlank
@@ -25,24 +21,15 @@ public class UserPutRequest {
 	public UserPutRequest() {}
 
 	
-	public UserPutRequest(@NotNull @NotBlank @NotEmpty String login,
-			@NotNull @NotBlank @NotEmpty String password,
+	public UserPutRequest(@NotNull @NotBlank @NotEmpty String password,
 			@NotNull @NotBlank @NotEmpty String oldPassword) {
 		super();
-		this.login = login;
 		this.password = password;
 		this.oldPassword = oldPassword;
 	}
 	
 	//Getters and Setters
-	
-	public String getLogin() {
-		return login;
-	}
 
-	public void setLogin(String login) {
-		this.login = login;
-	}
 
 	public String getPassword() {
 		return password;
@@ -62,7 +49,7 @@ public class UserPutRequest {
 	
 	@Override
 	public String toString() {
-		return "UserPutRequest [login=" + login + ", password=" + password + ", oldPassword=" + oldPassword + "]";
+		return "UserPutRequest [password=" + password + ", oldPassword=" + oldPassword + "]";
 	}
 
 	
