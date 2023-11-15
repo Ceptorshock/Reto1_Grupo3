@@ -1,0 +1,395 @@
+{
+	"info": {
+		"_postman_id": "15963f6d-98c2-4499-a99d-605d3b99d2a5",
+		"name": "Reto 1 Postman Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "31160003"
+	},
+	"item": [
+		{
+			"name": "Songs",
+			"item": [
+				{
+					"name": "findAllSongs",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "findSongByID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/songs/1",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "deleteSong",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU5NDg1LCJleHAiOjE3MDAxNDU4ODUsInVzZXJJZCI6MX0.v-UvOZRPI2XnZh3QIQTz938ILWLsQ7dcYi1XwothtNaWHh1HBTLw4hMV_JKb1O0rWMKOwo537AJMlX6oj-wyYw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "http://localhost:8080/api/songs/516",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs",
+								"516"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "updateSong",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU5NDg1LCJleHAiOjE3MDAxNDU4ODUsInVzZXJJZCI6MX0.v-UvOZRPI2XnZh3QIQTz938ILWLsQ7dcYi1XwothtNaWHh1HBTLw4hMV_JKb1O0rWMKOwo537AJMlX6oj-wyYw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"url\": \"https://www.youtube.com/watch?v=bUwwO-ZR8\",\r\n    \"title\": \"hola 1 minute version\",\r\n    \"author\": \"beethoven\"\r\n}"
+						},
+						"url": {
+							"raw": "http://10.5.7.154:8080/api/songs/28",
+							"protocol": "http",
+							"host": [
+								"10",
+								"5",
+								"7",
+								"154"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs",
+								"28"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "createSong",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU5NDg1LCJleHAiOjE3MDAxNDU4ODUsInVzZXJJZCI6MX0.v-UvOZRPI2XnZh3QIQTz938ILWLsQ7dcYi1XwothtNaWHh1HBTLw4hMV_JKb1O0rWMKOwo537AJMlX6oj-wyYw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": " {\r\n    \"url\": \"https://www.youtube.com/watch?v=bUwLlwO-ZR8\",\r\n    \"title\": \"beethoven's 5th symphony 1 minute version\",\r\n    \"author\": \"beethoven\"\r\n\r\n}"
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/songs",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"songs"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Favourites",
+			"item": [
+				{
+					"name": "GetFavs",
+					"protocolProfileBehavior": {
+						"disableBodyPruning": true
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU4NjA5LCJleHAiOjE3MDAxNDUwMDksInVzZXJJZCI6MX0.pRWmgwpw2uJ9HPWV6c9-DGZoyvS1laiC40IL1K0QxESEJyhFhIK8tJRrFh0lNDWo2E9ZHgyH6k4s0nF7I8VMuw",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\" :\"login1\",\r\n    \"password\":\"clave2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "localhost:8080/api/fav",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"fav"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "DeleteFav",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU4NjA5LCJleHAiOjE3MDAxNDUwMDksInVzZXJJZCI6MX0.pRWmgwpw2uJ9HPWV6c9-DGZoyvS1laiC40IL1K0QxESEJyhFhIK8tJRrFh0lNDWo2E9ZHgyH6k4s0nF7I8VMuw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/fav/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"fav",
+								"2"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "AddFav",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU4NjA5LCJleHAiOjE3MDAxNDUwMDksInVzZXJJZCI6MX0.pRWmgwpw2uJ9HPWV6c9-DGZoyvS1laiC40IL1K0QxESEJyhFhIK8tJRrFh0lNDWo2E9ZHgyH6k4s0nF7I8VMuw",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "localhost:8080/api/fav/2",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"fav",
+								"2"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Register User",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": ""
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/register",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"register"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Login1\",\r\n    \"password\": \"clave1\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/login",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"login"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "ChangePassword",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"pm.test(\"Status code is 200\", function () {",
+									"    pm.response.to.have.status(200);",
+									"});"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJMb2dpbjEiLCJpc3MiOiJBRFRfREFNIiwiaWF0IjoxNzAwMDU5MjU3LCJleHAiOjE3MDAxNDU2NTcsInVzZXJJZCI6MX0.hkmrXIS1Un421N3Ul208KEGli4MAWJ-xFye4T-FVUpcZTVH8Aooy3qGUHDm-hElhZ4JgfdYnwyHTsGeIT27XAA",
+								"type": "text"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\r\n    \"login\": \"Login1\",\r\n    \"password\": \"clave1\",\r\n    \"oldPassword\": \"clave2\"\r\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8080/api/auth/changePassword",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"auth",
+								"changePassword"
+							]
+						},
+						"description": "This is a GET request and it is used to \"get\" data from an endpoint. There is no request body for a GET request, but you can use query parameters to help specify the resource you want data on (e.g., in this request, we have `id=1`).\n\nA successful GET response will have a `200 OK` status, and should include some kind of response body - for example, HTML web content or JSON data."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Users",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "http://localhost:8080/api/users",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8080",
+							"path": [
+								"api",
+								"users"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
