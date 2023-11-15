@@ -19,11 +19,10 @@ La aplicación tiene como objetivo gestionar las canciones favoritas de los clie
 
 # Repositorios Relacionados
 
-●	Repositorio del Proyecto de Escritorio: ([Repositorio del Proyecto de Escritorio](https://github.com/Ceptorshock/Reto1_Grupo3.git))
-https://github.com/Ceptorshock/Reto1_Grupo3.git
+●	[Repositorio del Proyecto de Escritorio](https://github.com/Ceptorshock/Reto1_Grupo3.git)
 
-●	Repositorio de la Aplicación Android 
-https://github.com/PRSpidy/retoAndroid.git
+●	[Repositorio de la Aplicación Android](https://github.com/PRSpidy/retoAndroid.git)
+
 
 # Descripción del proyecto.
 
