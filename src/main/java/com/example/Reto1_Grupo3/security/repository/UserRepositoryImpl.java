@@ -1,6 +1,5 @@
 package com.example.Reto1_Grupo3.security.repository;
 
-import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,7 +11,6 @@ import org.springframework.jdbc.core.BeanPropertyRowMapper;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Repository;
 
-import com.example.Reto1_Grupo3.security.exceptions.UserEmptyListException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotCreatedException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotFoundException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotModifiedException;
@@ -25,14 +23,14 @@ public class UserRepositoryImpl implements UserRepository {
 	private JdbcTemplate jdbcTemplate;
 
 	@Override
-	public List<UserDAO> findAll() throws UserEmptyListException {
+	public UserDAO findUserById(Integer id) throws UserNotFoundException {
 		try {
-			return jdbcTemplate.query(
-					"SELECT * FROM users",
-					BeanPropertyRowMapper.newInstance(UserDAO.class)
-					);
+			return jdbcTemplate.queryForObject(
+					"SELECT * FROM users WHERE id = ?",
+					BeanPropertyRowMapper.newInstance(UserDAO.class),
+					id);
 		} catch (IncorrectResultSizeDataAccessException e) {
-			throw new UserEmptyListException("User list is empty in Repository");
+			throw new UserNotFoundException("User not in Repository");
 		}
 	}
 	

@@ -1,8 +1,5 @@
 package com.example.Reto1_Grupo3.security.controller;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -11,7 +8,6 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
-import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
@@ -20,13 +16,11 @@ import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.server.ResponseStatusException;
 
 import com.example.Reto1_Grupo3.security.configuration.JwtTokenUtil;
-import com.example.Reto1_Grupo3.security.exceptions.UserEmptyListException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotCreatedException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotFoundException;
 import com.example.Reto1_Grupo3.security.exceptions.UserNotModifiedException;
 import com.example.Reto1_Grupo3.security.model.UserDAO;
 import com.example.Reto1_Grupo3.security.model.UserDTO;
-import com.example.Reto1_Grupo3.security.model.UserGetResponse;
 import com.example.Reto1_Grupo3.security.model.UserLoginRequest;
 import com.example.Reto1_Grupo3.security.model.UserLoginResponse;
 import com.example.Reto1_Grupo3.security.model.UserPostRequest;
@@ -49,20 +43,6 @@ public class UserController {
 	@Autowired
 	UserService userService;
 	
-	@GetMapping("/users")
-	public ResponseEntity<List<UserGetResponse>> findAllUsers() throws UserEmptyListException {
-		try {
-			List<UserDTO> userDTO = userService.findAll();
-			List<UserGetResponse> userGetResponse = new ArrayList<UserGetResponse>();
-			for (UserDTO user : userDTO) {
-				userGetResponse.add(convertDTOtoResponse(user));
-			}
-			return new ResponseEntity<>(userGetResponse,HttpStatus.ACCEPTED);
-		} catch (UserEmptyListException e) {
-			throw new ResponseStatusException(HttpStatus.NO_CONTENT,e.getMessage(),e);
-		}
-	}
-	
 	@PostMapping("/auth/register")
 	public ResponseEntity<?> signIn(@RequestBody @Valid UserPostRequest userPostRequest) throws UserNotCreatedException {
 		
@@ -73,13 +53,6 @@ public class UserController {
 		return new ResponseEntity<Integer>(userService.registerUser(convertPostRequestToDTO(userPostRequest)), HttpStatus.CREATED);
 	}
 	
-	
-	@GetMapping("/auth/me")
-	public ResponseEntity<?> getUserInfo(Authentication authentication) {
-		UserDAO userDetails = (UserDAO) authentication.getPrincipal();
-		
-		return ResponseEntity.ok().body(userDetails);
-	}
 	
 	@PostMapping("/auth/login")
 	public ResponseEntity<?> login(@Valid @RequestBody UserLoginRequest userLoginRequest) {
@@ -103,9 +76,14 @@ public class UserController {
 		try {
 			UserDAO userDAO = (UserDAO) authentication.getPrincipal();
 			BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
-			userDAO.setPassword(passwordEncoder.encode(userPutRequest.getPassword()));
-			userService.changePassword(userDAO);
-			return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			UserDTO userDTO = userService.findUserById(userDAO.getId());
+			if(passwordEncoder.matches(userPutRequest.getOldPassword(),userDTO.getPassword())) {
+				userDAO.setPassword(passwordEncoder.encode(userPutRequest.getPassword()));
+				userService.changePassword(userDAO);
+				return new ResponseEntity<>(HttpStatus.NO_CONTENT);
+			} else {
+				return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
+			}
 		} catch (BadCredentialsException e) {
 			e.printStackTrace();
 			return ResponseEntity.status(HttpStatus.UNAUTHORIZED).build();
@@ -146,18 +124,6 @@ public class UserController {
 				userPostRequest.getEmail(),
 				userPostRequest.getPassword()
 				);
-	}
-
-
-
-	private UserGetResponse convertDTOtoResponse(UserDTO userDTO) {
-		return new UserGetResponse(
-				userDTO.getId(),
-				userDTO.getName(),
-				userDTO.getSurname(),
-				userDTO.getLogin(),
-				userDTO.getEmail()
-				);	
 	}
 
 	
