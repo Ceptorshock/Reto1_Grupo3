@@ -73,12 +73,10 @@ public class SongController {
 			
 			return new ResponseEntity<>(listSongsGetREsponse, HttpStatus.ACCEPTED);
 		}catch (SongEmptyListException e){
-		
 			throw new ResponseStatusException(HttpStatus.NO_CONTENT, e.getMessage(), e);
 		}
-
-
 	}
+	
 	@GetMapping("/songs/{id_song}")
 	public ResponseEntity<List<SongGetResponse>> getSongById(@PathVariable("id_song") int id)throws SongNotFoundException{
 		List<SongDTO> listSongsDAO = songService.findSongById(id);
